@@ -211,6 +211,20 @@ LEXICON: dict[str, str] = {
     "ayungar": "PossN", "yungar": "PossN", "hirungar": "PossN",
     # --- Question words ---
     "huzh": "QN", "wazh": "QN", "werazh": "QN", "wenazh": "QN",
+    # --- Copula & basic motion ---
+    "izak": "V",                     # to be
+    "govan": "V",                    # to go
+    "silend": "V",                   # to silence / be silent
+    # --- Locatives ---
+    "heva": "Loc",                   # here
+    "theva": "Loc",                  # there
+    # --- How question word ---
+    "kovazh": "QN",                  # how
+    # --- Greetings ---
+    "gretu": "Greet",                # hello
+    "valedu": "Greet",               # goodbye
+    # --- State adjective ---
+    "welath": "Adj",                 # well / fine
     # --- Closed class ---
     "noth": "Neg",
     "kawzad": "CAUS_V",
@@ -290,6 +304,10 @@ VERB_EN: dict[str, tuple[str, str]] = {
     "fixar":    ("fix",       "fixing"),
     "openak":   ("open",      "opening"),
     "klozad":   ("close",     "closing"),
+    # Basic language
+    "izak":     ("be",        "being"),
+    "govan":    ("go",        "going"),
+    "silend":   ("silence",   "silencing"),
 }
 
 # ---------------------------------------------------------------------------
@@ -314,6 +332,7 @@ PAST_SIMPLE: dict[str, str] = {
     "help": "helped", "fight": "fought", "rule": "ruled", "trade": "traded",
     "share": "shared", "join": "joined", "make": "made", "break": "broke",
     "fix": "fixed", "open": "opened", "close": "closed",
+    "be": "was", "go": "went", "silence": "silenced",
 }
 
 # ---------------------------------------------------------------------------
@@ -338,6 +357,7 @@ PAST_PARTICIPLE: dict[str, str] = {
     "help": "helped", "fight": "fought", "rule": "ruled", "trade": "traded",
     "share": "shared", "join": "joined", "make": "made", "break": "broken",
     "fix": "fixed", "open": "opened", "close": "closed",
+    "be": "been", "go": "gone", "silence": "silenced",
 }
 
 # ---------------------------------------------------------------------------
@@ -478,6 +498,8 @@ ADJ_EN: dict[str, str] = {
     "kalerith": "lonely", "glayrath": "happy", "thoroth": "grieving",
     "hoprath": "hopeful", "kurrath": "courageous", "wundrath": "awestruck",
     "duboth": "doubtful", "venturith": "proud",
+    # State
+    "welath": "well",
 }
 
 PREP_EN: dict[str, str] = {
@@ -492,4 +514,15 @@ TIME_EN: dict[str, str] = {
 
 QN_EN: dict[str, str] = {
     "huzh": "who", "wazh": "what", "werazh": "where", "wenazh": "when",
+    "kovazh": "how",
+}
+
+LOC_EN: dict[str, str] = {
+    "heva": "here",
+    "theva": "there",
+}
+
+GREET_EN: dict[str, str] = {
+    "gretu": "hello",
+    "valedu": "goodbye",
 }

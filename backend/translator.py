@@ -13,6 +13,7 @@ from lexicon import (
     LEXICON, VERB_STEMS,
     VERB_EN, PAST_SIMPLE, PAST_PARTICIPLE,
     NOUN_EN, PRON_EN, PRON_OBJ_EN, POSS_EN, DET_EN, ADJ_EN, PREP_EN, TIME_EN, QN_EN,
+    LOC_EN, GREET_EN,
 )
 
 # ---------------------------------------------------------------------------
@@ -170,6 +171,9 @@ def _translate_node(node: ParseNode, role: str = "subject") -> str:
         if sym == "P":      return PREP_EN.get(surf, surf)
         if sym == "T":      return TIME_EN.get(surf, surf)
         if sym == "QN":     return QN_EN.get(surf, surf)
+        if sym == "Loc":    return LOC_EN.get(surf, surf)
+        if sym == "Greet":  return GREET_EN.get(surf, surf)
+        if sym == "PropN":  return surf   # preserve original capitalisation
         if sym == "Neg":    return "not"
         if sym == "CAUS_V": return "cause"
         return surf
@@ -199,7 +203,7 @@ def _translate_node(node: ParseNode, role: str = "subject") -> str:
     if sym == "PP":
         return f"{_translate_node(L)} {_translate_node(R, role='object')}"
 
-    if sym in ("VP_PP", "VP_T", "VP_PP_T", "VP_Q"):
+    if sym in ("VP_PP", "VP_T", "VP_PP_T", "VP_Q", "VP_LOC"):
         return f"{_translate_node(L)} {_translate_node(R)}"
 
     if sym == "S":
@@ -209,7 +213,22 @@ def _translate_node(node: ParseNode, role: str = "subject") -> str:
 
     if sym == "S_Q":
         if L.symbol == "QN":
-            return f"{_translate_node(L)} {_translate_node(R)}?"
+            qn_surf = L.token.surface if L.is_leaf() else ""
+            qn_text = _translate_node(L)
+            # Subject-position QNs ("who"/"what") act as the grammatical subject;
+            # adverbial QNs ("how"/"where"/"when") need the VP's NP for agreement.
+            if qn_surf in ("huzh", "wazh"):
+                return f"{qn_text} {_translate_node(R)}?"
+            # Adverbial QN: derive agreement from NP inside VP (treat as logical subject)
+            vp_node = R
+            if (vp_node.symbol == "VP" and not vp_node.is_leaf()
+                    and vp_node.right is not None):
+                v_text  = _translate_node(vp_node.left)
+                np_text = _translate_node(vp_node.right, role="subject")
+                agreed  = _fix_agreement(f"{np_text} {v_text}").split()
+                agreed_v = agreed[1] if len(agreed) > 1 else v_text
+                return f"{qn_text} {agreed_v} {np_text}?"
+            return f"{qn_text} {_translate_node(R)}?"
         return f"{_translate_node(L, role='subject')} {_translate_node(R)}?"
 
     if sym == "S_CAUS":
@@ -260,12 +279,12 @@ def _fix_agreement(text: str) -> str:
     subj = words[0].lower()
 
     if subj in _PLURAL_SUBJECTS:
-        fixes = {"was": "were", "is": "are", "has": "have"}
+        fixes = {"was": "were", "is": "are", "has": "have", "be": "are"}
         if words[1] in fixes:
             words[1] = fixes[words[1]]
 
     elif subj == "i":
-        fixes_i = {"is": "am", "has": "have"}
+        fixes_i = {"is": "am", "has": "have", "be": "am"}
         if words[1] in fixes_i:
             words[1] = fixes_i[words[1]]
 
@@ -273,6 +292,9 @@ def _fix_agreement(text: str) -> str:
         if words[1] == "do":
             # NEG_V: "do not V" → "does not V"
             words[1] = "does"
+        elif words[1] == "be":
+            # copula bare form — 3rd singular → "is"
+            words[1] = "is"
         elif words[1] == "usually" and len(words) > 2 and words[2] not in _AUX_WORDS and words[2] not in _KNOWN_PAST_FORMS:
             # habitual: "He usually see" → "He usually sees"
             words[2] = _add_3ps(words[2])

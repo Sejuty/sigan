@@ -37,6 +37,8 @@ BINARY_RULES: list[tuple[str, str, str]] = [
     ("VP",        "V",         "NP"),
     ("VP",        "NEG_V",     "NP"),
     ("VP",        "V",         "S"),       # complement clause: hope/believe/know + S
+    ("VP",        "V",         "Adj"),     # predicate adjective: "I am well"
+    ("VP_LOC",    "VP",        "Loc"),     # verb + locative: "go there"
     # PP
     ("PP",        "P",         "NP"),
     # Question sentences
@@ -44,6 +46,8 @@ BINARY_RULES: list[tuple[str, str, str]] = [
     ("S_Q",       "NP",        "VP_Q"),
     # Causative sentence
     ("S_CAUS",    "NP",        "CAUS_BODY"),
+    # Locative sentences
+    ("S",         "NP",        "VP_LOC"),
 ]
 
 # ---------------------------------------------------------------------------
@@ -54,8 +58,11 @@ UNARY_RULES: list[tuple[str, str]] = [
     ("S",   "VP"),       # imperative
     ("S",   "S_Q"),
     ("S",   "S_CAUS"),
+    ("S",   "VP_LOC"),   # imperative with locative: "go there!"
+    ("S",   "Greet"),    # standalone greeting: "hello"
     ("NP",  "N"),
     ("NP",  "Pron"),
+    ("NP",  "PropN"),    # proper noun as NP: "Sejuty"
     ("VP",  "V"),
     ("VP",  "NEG_V"),
 ]

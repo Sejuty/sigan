@@ -9,13 +9,14 @@ const links = [
   { href: "/vocab",     label: "Vocab"     },
 ];
 
+
 export default function Navbar() {
   const pathname = usePathname();
 
   return (
     <nav className="sticky top-0 z-50 border-b border-slate-800 bg-slate-950/90 backdrop-blur">
       <div className="mx-auto flex h-14 max-w-6xl items-center gap-8 px-6">
-        <Link href="/translate" className="flex items-center gap-2">
+        <Link href="/" className="flex items-center gap-2">
           <span className="text-violet-400 font-bold text-lg tracking-widest sigan">◈</span>
           <span className="font-semibold tracking-wide text-slate-100">SIGAN</span>
         </Link>

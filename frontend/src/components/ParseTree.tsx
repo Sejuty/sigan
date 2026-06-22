@@ -16,11 +16,15 @@ const SYM_COLOR: Record<string, string> = {
   VP_PP:    "text-emerald-300",
   VP_T:     "text-emerald-300",
   VP_PP_T:  "text-emerald-300",
+  VP_LOC:   "text-emerald-300",
   NP_A:     "text-sky-300",
   NEG_V:    "text-red-400",
   CAUS_BODY:"text-fuchsia-300",
   NP_V:     "text-sky-300",
   VP_Q:     "text-pink-300",
+  Loc:      "text-orange-300",
+  Greet:    "text-yellow-400",
+  PropN:    "text-sky-300",
 };
 
 function NodeLine({

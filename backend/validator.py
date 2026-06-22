@@ -70,7 +70,8 @@ def tokenize_and_tag(sentence: str) -> tuple[list[TokenInfo], list[str]]:
     tokens: list[TokenInfo] = []
     errors: list[str] = []
 
-    for word in sentence.lower().split():
+    for raw_word in sentence.split():
+        word = raw_word.lower()
         if word in LEXICON:
             tokens.append(TokenInfo(word, LEXICON[word]))
         else:
@@ -78,8 +79,11 @@ def tokenize_and_tag(sentence: str) -> tuple[list[TokenInfo], list[str]]:
             if result:
                 stem, tense, aspect = result
                 tokens.append(TokenInfo(word, "V", stem=stem, tense=tense, aspect=aspect))
+            elif raw_word[0].isupper():
+                # Capitalized word not in lexicon → proper noun
+                tokens.append(TokenInfo(raw_word, "PropN"))
             else:
-                errors.append(f"Unknown word: '{word}'")
+                errors.append(f"Unknown word: '{raw_word}'")
 
     return tokens, errors
 
