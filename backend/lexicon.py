@@ -9,226 +9,232 @@ Add new words here; validator and translator pick them up automatically.
 
 LEXICON: dict[str, str] = {
     # --- Core nouns (singular) ---
-    "manu": "N", "childa": "N", "watra": "N", "stonu": "N",
-    "truku": "N", "burda": "N", "homu": "N", "rotha": "N",
-    "fudo": "N", "sunu": "N", "handu": "N", "rivna": "N",
-    "mounta": "N", "worda": "N", "besta": "N", "fyru": "N",
+    "laeva": "N",   "nirela": "N",  "thoevi": "N",  "thore": "N",
+    "silvao": "N",  "viroela": "N", "taelo": "N",   "mirae": "N",
+    "savori": "N",  "aelura": "N",  "nalvae": "N",  "sorivi": "N",
+    "talvore": "N", "voriva": "N",  "veldae": "N",  "nirvae": "N",
     # --- Core nouns (plural) ---
-    "manun": "N", "childan": "N", "watran": "N", "stonun": "N",
-    "trukun": "N", "burdan": "N", "homun": "N", "rothan": "N",
-    "fudon": "N", "sunun": "N", "handun": "N", "rivnan": "N",
-    "mountan": "N", "wordan": "N", "bestan": "N", "fyrun": "N",
+    "laevan": "N",   "nirelan": "N",  "thoevin": "N",  "thoren": "N",
+    "silvaon": "N",  "viroelan": "N", "taelon": "N",   "miraen": "N",
+    "savorin": "N",  "aeluran": "N",  "nalvaen": "N",  "sorivin": "N",
+    "talvoren": "N", "vorivan": "N",  "veldaen": "N",  "nirvaen": "N",
     # --- Body parts (singular / plural) ---
-    "dava": "N", "davan": "N",       # head
-    "oku": "N",  "okun": "N",        # eye
-    "mova": "N", "movan": "N",       # mouth
-    "nasu": "N", "nasun": "N",       # nose
-    "braku": "N", "brakun": "N",     # arm
-    "legu": "N",  "legun": "N",      # leg
-    "fotu": "N",  "fotun": "N",      # foot
-    "kordu": "N", "kordun": "N",     # heart
-    "ventra": "N", "ventran": "N",   # stomach / belly
-    "chesta": "N", "chestan": "N",   # chest
-    "doru": "N",  "dorun": "N",      # back
-    "skinu": "N", "skinun": "N",     # skin
+    "delva": "N",   "delvan": "N",     # head
+    "orilu": "N",   "orilun": "N",     # eye
+    "thilvo": "N",  "thilvon": "N",    # mouth
+    "silno": "N",   "silnon": "N",     # nose
+    "nalvore": "N", "nalvoren": "N",   # arm
+    "lorve": "N",   "lorven": "N",     # leg
+    "thivore": "N", "thivoren": "N",   # foot
+    "aelvo": "N",   "aelvon": "N",     # heart
+    "serva": "N",   "servan": "N",     # stomach
+    "thelvae": "N", "thelvaen": "N",   # chest
+    "dorvae": "N",  "dorvaen": "N",    # back
+    "velsae": "N",  "velsaen": "N",    # skin
     # --- Nature & environment (singular / plural) ---
-    "skavu": "N",  "skavun": "N",    # sky
-    "winda": "N",  "windan": "N",    # wind
-    "ertha": "N",  "erthan": "N",    # earth / ground
-    "ranu": "N",   "ranun": "N",     # rain
-    "snova": "N",  "snovan": "N",    # snow
-    "kluda": "N",  "kludan": "N",    # cloud
-    "noku": "N",   "nokun": "N",     # night
-    "dayo": "N",   "dayon": "N",     # day
-    "staru": "N",  "starun": "N",    # star
-    "sova": "N",   "sovan": "N",     # sea
-    "valu": "N",   "valun": "N",     # valley
-    "dusta": "N",  "dustan": "N",    # dust
-    "rocha": "N",  "rochan": "N",    # rock (large)
-    "sanda": "N",  "sandan": "N",    # sand
-    "foresta": "N", "forestan": "N", # forest
-    "fielda": "N", "fieldan": "N",   # field
+    "laevori": "N", "laevorin": "N",   # sky
+    "milore": "N",  "miloren": "N",    # wind
+    "norvi": "N",   "norvin": "N",     # earth / ground
+    "silvori": "N", "silvorin": "N",   # rain
+    "sorvia": "N",  "sorvian": "N",    # snow
+    "lorvilo": "N", "lorvilon": "N",   # cloud
+    "morvilo": "N", "morvilon": "N",   # night
+    "norivia": "N", "norivian": "N",   # day
+    "aelvori": "N", "aelvorin": "N",   # star
+    "thelori": "N", "thelorin": "N",   # sea
+    "nilora": "N",  "niloran": "N",    # valley
+    "mirvalo": "N", "mirvalon": "N",   # dust
+    "talvori": "N", "talvorin": "N",   # rock
+    "selori": "N",  "selorin": "N",    # sand
+    "vaelori": "N", "vaeorin": "N",    # forest  (vaelori + n → vaelorin, display as vaeorin)
+    "alorvi": "N",  "alorvin": "N",    # field
     # --- Abstract concepts (singular / plural) ---
-    "tima": "N",   "timan": "N",     # time
-    "truta": "N",  "trutan": "N",    # truth
-    "lifa": "N",   "lifan": "N",     # life
-    "morta": "N",  "mortan": "N",    # death
-    "powra": "N",  "powran": "N",    # power
-    "knowu": "N",  "knowun": "N",    # knowledge
-    "fathu": "N",  "fathun": "N",    # faith / belief
-    "ritu": "N",   "ritun": "N",     # right / justice
-    "duta": "N",   "dutan": "N",     # duty
-    "sekru": "N",  "sekrun": "N",    # secret
-    "dreamu": "N", "dreamun": "N",   # dream
-    "memorya": "N", "memoryan": "N", # memory
+    "tilovi": "N",  "tilovin": "N",    # time
+    "valori": "N",  "valorin": "N",    # truth
+    "alorivi": "N", "alorivin": "N",   # life
+    "morive": "N",  "moriven": "N",    # death
+    "torvi": "N",   "torvin": "N",     # power
+    "alavori": "N", "alavorin": "N",   # knowledge
+    "saevori": "N", "saevorin": "N",   # faith
+    "rilova": "N",  "rilovan": "N",    # justice
+    "dalvori": "N", "dalvorin": "N",   # duty
+    "mirovi": "N",  "mirovin": "N",    # secret
+    "elvorae": "N", "elvoraen": "N",   # dream
+    "milorvi": "N", "milorvin": "N",   # memory
     # --- Social & relational (singular / plural) ---
-    "famla": "N",  "famlan": "N",    # family
-    "frenda": "N", "френdan": "N",   # friend
-    "enemu": "N",  "enemun": "N",    # enemy
-    "chefa": "N",  "chefan": "N",    # leader
-    "koma": "N",   "koman": "N",     # community / group
-    "gesta": "N",  "gestan": "N",    # guest
-    "voka": "N",   "vokan": "N",     # voice
-    "namu": "N",   "namun": "N",     # name
-    "rula": "N",   "rulan": "N",     # rule / law
-    "wara": "N",   "waran": "N",     # war
-    "paka": "N",   "pakan": "N",     # peace (agreement)
-    "giftu": "N",  "giftun": "N",    # gift
+    "selvori": "N", "selvorin": "N",   # family
+    "vaelova": "N", "vaelovan": "N",   # friend
+    "narovi": "N",  "narovin": "N",    # enemy
+    "thalvori": "N","thalvorin": "N",  # leader
+    "solori": "N",  "solorin": "N",    # community
+    "lorivae": "N", "lorivaen": "N",   # guest
+    "vilorae": "N", "viloraen": "N",   # voice
+    "aelova": "N",  "aelovan": "N",    # name
+    "ralovi": "N",  "ralovin": "N",    # law
+    "terovi": "N",  "terovin": "N",    # war
+    "paelovi": "N", "paelovin": "N",   # peace (accord)
+    "tilorvae": "N","tilorvaen": "N",  # gift
     # --- Emotion nouns (singular / plural) ---
-    "joya": "N",   "joyan": "N",     # joy
-    "soru": "N",   "sorun": "N",     # sorrow
-    "ragu": "N",   "ragun": "N",     # anger
-    "dreda": "N",  "dredan": "N",    # fear
-    "lovu": "N",   "lovun": "N",     # love (noun)
-    "hatu": "N",   "hatun": "N",     # hate (noun)
-    "shamu": "N",  "shamun": "N",    # shame
-    "pisu": "N",   "pisun": "N",     # peace (inner)
-    "kalu": "N",   "kalun": "N",     # loneliness
-    "glayu": "N",  "glayun": "N",    # happiness / gladness
-    "thoru": "N",  "thorun": "N",    # grief
-    "ventu": "N",  "ventun": "N",    # pride
-    "envu": "N",   "envun": "N",     # envy
-    "remu": "N",   "remun": "N",     # regret
-    "hopa": "N",   "hopan": "N",     # hope (noun)
-    "trusta": "N", "trustan": "N",   # trust (noun)
-    "kura": "N",   "kuran": "N",     # courage
-    "duba": "N",   "duban": "N",     # doubt
-    "wundu": "N",  "wundun": "N",    # wonder / awe
-    "komforta": "N", "komfortan": "N", # comfort
-    "nostu": "N",  "nostun": "N",    # longing / nostalgia
+    "glorvi": "N",  "glorvin": "N",    # joy
+    "sorovi": "N",  "sorovin": "N",    # sorrow
+    "nerovi": "N",  "nerovin": "N",    # anger
+    "drelovi": "N", "drelovin": "N",   # fear
+    "elorvi": "N",  "elorvin": "N",    # love
+    "narvori": "N", "narvorin": "N",   # hate
+    "saelvori": "N","saelvorin": "N",  # shame
+    "silvovi": "N", "silvovin": "N",   # peace (inner)
+    "kalorvi": "N", "kalorvin": "N",   # loneliness
+    "gloraevi": "N","gloraevin": "N",  # happiness
+    "sorvori": "N", "sorvorin": "N",   # grief
+    "velorvi": "N", "velorvin": "N",   # pride
+    "naevori": "N", "naevorin": "N",   # envy
+    "relorvi": "N", "relorvin": "N",   # regret
+    "lorivi": "N",  "lorivin": "N",    # hope (noun)
+    "thelvovi": "N","thelvovin": "N",  # trust (noun)
+    "talorvae": "N","talorvaen": "N",  # courage
+    "daelovi": "N", "daeolovin": "N",  # doubt
+    "nilorvae": "N","nilorvaen": "N",  # wonder / awe
+    "aelvorae": "N","aelvoraen": "N",  # comfort
+    "velnostu": "N","velnostun": "N",  # longing / nostalgia
     # --- Core verb stems ---
-    "sigan": "V", "givak": "V", "karyad": "V", "spekor": "V",
-    "walkag": "V", "etak": "V", "bildag": "V", "findar": "V",
-    "restak": "V", "folur": "V", "holdag": "V", "knowar": "V",
-    "dethrak": "V",
+    "velor": "V",   "anirel": "V",  "luvar": "V",   "thaevel": "V",
+    "mirel": "V",   "savorel": "V", "toravel": "V", "seluvar": "V",
+    "laemir": "V",  "orivel": "V",  "felavar": "V", "alavar": "V",
+    "morivel": "V",
+    # --- Copula & motion ---
+    "aevil": "V",    # to be
+    "lorel": "V",    # to go
+    "silvonor": "V", # to silence / be silent
     # --- Communication verbs ---
-    "askar": "V",    # ask
-    "answad": "V",   # answer
-    "herad": "V",    # hear
-    "ridan": "V",    # read
-    "writag": "V",   # write
-    "singak": "V",   # sing
-    "criyad": "V",   # cry out / shout
-    "whispar": "V",  # whisper
+    "selvir": "V",    # ask
+    "thorivel": "V",  # answer
+    "aurinel": "V",   # hear
+    "lireval": "V",   # read
+    "silavel": "V",   # write
+    "aelovel": "V",   # sing
+    "virael": "V",    # shout
+    "solivar": "V",   # whisper
     # --- Motion verbs ---
-    "runak": "V",    # run
-    "jumbad": "V",   # jump
-    "retorn": "V",   # return
-    "entrak": "V",   # enter
-    "leavak": "V",   # leave
-    "climbag": "V",  # climb
-    "falan": "V",    # fall
-    "throwan": "V",  # throw
-    "pushak": "V",   # push
-    "pulad": "V",    # pull
+    "talovel": "V",   # run
+    "vilanor": "V",   # jump
+    "aeravel": "V",   # return
+    "anavor": "V",    # enter
+    "laevoran": "V",  # leave
+    "solovar": "V",   # climb
+    "luvorn": "V",    # fall
+    "arivel": "V",    # throw
+    "telavar": "V",   # push
+    "oravel": "V",    # pull
     # --- Mental verbs ---
-    "thinkar": "V",  # think
-    "remembrak": "V", # remember
-    "forgetak": "V", # forget
-    "belivan": "V",  # believe
-    "wantak": "V",   # want
-    "chosar": "V",   # choose
-    "planak": "V",   # plan
-    "imagak": "V",   # imagine
+    "aethivar": "V",  # think
+    "elorivan": "V",  # remember
+    "falovel": "V",   # forget
+    "vaethirel": "V", # believe
+    "selavor": "V",   # want
+    "thilovar": "V",  # choose
+    "alviran": "V",   # plan
+    "ilovaen": "V",   # imagine
     # --- Emotion verbs ---
-    "lovak": "V",    # love (to love)
-    "hatak": "V",    # hate (to hate)
-    "fearan": "V",   # fear (to fear)
-    "joyan": "V",    # rejoice
-    "mournad": "V",  # mourn
-    "hopak": "V",    # hope (to hope)
-    "trustad": "V",  # trust (to trust)
+    "elavar": "V",    # love (to love)
+    "narivan": "V",   # hate (to hate)
+    "drelovar": "V",  # fear (to fear)
+    "elarovel": "V",  # rejoice
+    "sorviran": "V",  # mourn
+    "lorivir": "V",   # hope (to hope)
+    "vaelavar": "V",  # trust (to trust)
     # --- Social & physical verbs ---
-    "helpak": "V",   # help
-    "figtak": "V",   # fight
-    "rulad": "V",    # rule
-    "tradak": "V",   # trade
-    "sharad": "V",   # share
-    "joinak": "V",   # join
-    "makad": "V",    # make / create
-    "brekan": "V",   # break
-    "fixar": "V",    # fix / repair
-    "openak": "V",   # open
-    "klozad": "V",   # close
+    "alivor": "V",    # help
+    "teravel": "V",   # fight
+    "saliver": "V",   # rule
+    "velavan": "V",   # trade
+    "olivaen": "V",   # share
+    "loravan": "V",   # join
+    "alvorel": "V",   # make / create
+    "tiravel": "V",   # break
+    "nalavar": "V",   # fix / repair
+    "aeluvar": "V",   # open
+    "naoluvar": "V",  # close
     # --- Prepositions ---
-    "tov": "P", "from": "P", "nak": "P", "wid": "P",
-    "thov": "P", "for": "P",
+    "vil": "P",  "mira": "P",  "ana": "P",  "leva": "P",
+    "thael": "P", "ori": "P",
     # --- Determiners ---
-    "gar": "Det", "brath": "Det",
+    "al": "Det", "elo": "Det",
     # --- Time words ---
-    "nowom": "T", "yestom": "T", "morom": "T",
-    "evrom": "T", "nevrom": "T", "wonsom": "T",
-    # --- Core adjectives ---
-    "bigrath": "Adj", "oldrath": "Adj", "darkoth": "Adj", "swifth": "Adj",
-    "smaloth": "Adj", "koldrith": "Adj", "strongath": "Adj", "wethrakh": "Adj",
-    # --- Size & shape adjectives ---
-    "longrath": "Adj",   # long
-    "shoroth": "Adj",    # short
-    "roundath": "Adj",   # round
-    "deeprith": "Adj",   # deep
-    "widrath": "Adj",    # wide
-    "narrath": "Adj",    # narrow
-    "talloth": "Adj",    # tall
-    "flatrath": "Adj",   # flat
-    # --- Sensory adjectives ---
-    "hotrath": "Adj",    # hot
-    "brightrath": "Adj", # bright
-    "loudoth": "Adj",    # loud
-    "sharpoth": "Adj",   # sharp
-    "dulrith": "Adj",    # dull / blunt
-    "smoothath": "Adj",  # smooth
-    "roughoth": "Adj",   # rough
-    # --- Evaluative adjectives ---
-    "godrath": "Adj",    # good
-    "badoth": "Adj",     # bad
-    "newrath": "Adj",    # new
-    "truerath": "Adj",   # true
-    "falsoth": "Adj",    # false
-    "holyrath": "Adj",   # holy
-    "wisrath": "Adj",    # wise
-    "fooloth": "Adj",    # foolish
-    "noblrath": "Adj",   # noble
-    # --- Emotion adjectives ---
-    "jorath": "Adj",     # joyful
-    "sorath": "Adj",     # sorrowful
-    "ragoth": "Adj",     # angry
-    "dredath": "Adj",    # fearful
-    "lovrath": "Adj",    # loving
-    "hatoth": "Adj",     # hateful
-    "kalerith": "Adj",   # lonely
-    "glayrath": "Adj",   # glad / happy
-    "thoroth": "Adj",    # grieving
-    "hoprath": "Adj",    # hopeful
-    "kurrath": "Adj",    # courageous
-    "wundrath": "Adj",   # awestruck
-    "duboth": "Adj",     # doubtful
-    "venturith": "Adj",  # proud
-    # --- Pronouns (singular / plural) ---
-    "ayu": "Pron", "yu": "Pron", "hiru": "Pron",
-    "ayun": "Pron", "yun": "Pron", "hirun": "Pron",
-    # --- Possessives ---
-    "ayugar": "PossN", "yugar": "PossN", "hirugar": "PossN",
-    "ayungar": "PossN", "yungar": "PossN", "hirungar": "PossN",
+    "salom": "T",   "verom": "T",   "norelom": "T",
+    "aevorom": "T", "navorom": "T", "eluvom": "T",
     # --- Question words ---
-    "huzh": "QN", "wazh": "QN", "werazh": "QN", "wenazh": "QN",
-    # --- Copula & basic motion ---
-    "izak": "V",                     # to be
-    "govan": "V",                    # to go
-    "silend": "V",                   # to silence / be silent
+    "sivael": "QN", "tavael": "QN", "lorvael": "QN",
+    "morvael": "QN", "alvael": "QN",
+    # --- Pronouns (singular / plural) ---
+    "elva": "Pron", "sova": "Pron", "thira": "Pron",
+    "elvan": "Pron", "sovan": "Pron", "thiran": "Pron",
+    # --- Possessives ---
+    "elvanar": "PossN", "sovanar": "PossN", "thiranar": "PossN",
+    "elvanen": "PossN", "sovanen": "PossN", "thiranen": "PossN",
+    # --- Copula & basic motion (already above) ---
     # --- Locatives ---
-    "heva": "Loc",                   # here
-    "theva": "Loc",                  # there
-    # --- How question word ---
-    "kovazh": "QN",                  # how
+    "ilra": "Loc",   # here
+    "ulra": "Loc",   # there
+    # --- How question word (already above in QN) ---
     # --- Greetings ---
-    "gretu": "Greet",                # hello
-    "valedu": "Greet",               # goodbye
+    "laevel": "Greet",  # hello
+    "sorvael": "Greet", # goodbye
     # --- State adjective ---
-    "welath": "Adj",                 # well / fine
+    "saeril": "Adj",    # well / fine
+    # --- Adjectives (core) ---
+    "loravil": "Adj",   # big
+    "velasil": "Adj",   # old
+    "mornivil": "Adj",  # dark
+    "talomil": "Adj",   # fast / swift
+    "elovil": "Adj",    # small
+    "sorvil": "Adj",    # cold
+    "theravil": "Adj",  # strong
+    "thoelvil": "Adj",  # wet
+    # --- Size & shape adjectives ---
+    "laeronil": "Adj",  # long
+    "nilorvil": "Adj",  # short
+    "voravil": "Adj",   # round
+    "thorivil": "Adj",  # deep
+    "velravil": "Adj",  # wide
+    "narovil": "Adj",   # narrow
+    "thalvil": "Adj",   # tall
+    "selorvil": "Adj",  # flat
+    # --- Sensory adjectives ---
+    "nirvil": "Adj",    # hot
+    "aelorvil": "Adj",  # bright
+    "lorovil": "Adj",   # loud
+    "saelvil": "Adj",   # sharp
+    "milorvil": "Adj",  # dull / blunt
+    "silvorvil": "Adj", # smooth
+    "norivil": "Adj",   # rough
+    # --- Evaluative adjectives ---
+    "aelanil": "Adj",   # good
+    "naranil": "Adj",   # bad
+    "elvanil": "Adj",   # new
+    "valoril": "Adj",   # true
+    "nalovil": "Adj",   # false
+    "aelvoril": "Adj",  # holy
+    "veloril": "Adj",   # wise
+    "naelvoril": "Adj", # foolish
+    "thalvoril": "Adj", # noble
+    # --- Emotion adjectives ---
+    "glorvil": "Adj",   # joyful
+    "sorovil": "Adj",   # sorrowful
+    "nerovil": "Adj",   # angry
+    "drelovil": "Adj",  # fearful
+    "elorvil": "Adj",   # loving
+    "narvorvil": "Adj", # hateful
+    "kalovil": "Adj",   # lonely
+    "gloraevil": "Adj", # glad / happy
+    "sorvovil": "Adj",  # grieving
+    "lorivil": "Adj",   # hopeful
+    "talorvil": "Adj",  # courageous
+    "naevovil": "Adj",  # doubtful
+    "velovil": "Adj",   # proud
     # --- Closed class ---
-    "noth": "Neg",
-    "kawzad": "CAUS_V",
-    "hey": "VOC",
+    "nael": "Neg",
+    "lauvivar": "CAUS_V",
+    "avar": "VOC",
 }
 
 # Verb stems (uninflected) — derived automatically, used during suffix stripping
@@ -241,73 +247,73 @@ VERB_STEMS: set[str] = {w for w, pos in LEXICON.items() if pos == "V"}
 
 VERB_EN: dict[str, tuple[str, str]] = {
     # Core
-    "sigan":    ("see",       "seeing"),
-    "givak":    ("give",      "giving"),
-    "karyad":   ("carry",     "carrying"),
-    "spekor":   ("speak",     "speaking"),
-    "walkag":   ("walk",      "walking"),
-    "etak":     ("eat",       "eating"),
-    "bildag":   ("build",     "building"),
-    "findar":   ("find",      "finding"),
-    "restak":   ("rest",      "resting"),
-    "folur":    ("follow",    "following"),
-    "holdag":   ("hold",      "holding"),
-    "knowar":   ("know",      "knowing"),
-    "dethrak":  ("die",       "dying"),
-    "kawzad":   ("cause",     "causing"),
+    "velor":    ("see",       "seeing"),
+    "anirel":   ("give",      "giving"),
+    "luvar":    ("carry",     "carrying"),
+    "thaevel":  ("speak",     "speaking"),
+    "mirel":    ("walk",      "walking"),
+    "savorel":  ("eat",       "eating"),
+    "toravel":  ("build",     "building"),
+    "seluvar":  ("find",      "finding"),
+    "laemir":   ("rest",      "resting"),
+    "orivel":   ("follow",    "following"),
+    "felavar":  ("hold",      "holding"),
+    "alavar":   ("know",      "knowing"),
+    "morivel":  ("die",       "dying"),
+    "lauvivar": ("cause",     "causing"),
+    # Copula & motion
+    "aevil":    ("be",        "being"),
+    "lorel":    ("go",        "going"),
+    "silvonor": ("silence",   "silencing"),
     # Communication
-    "askar":    ("ask",       "asking"),
-    "answad":   ("answer",    "answering"),
-    "herad":    ("hear",      "hearing"),
-    "ridan":    ("read",      "reading"),
-    "writag":   ("write",     "writing"),
-    "singak":   ("sing",      "singing"),
-    "criyad":   ("shout",     "shouting"),
-    "whispar":  ("whisper",   "whispering"),
+    "selvir":   ("ask",       "asking"),
+    "thorivel": ("answer",    "answering"),
+    "aurinel":  ("hear",      "hearing"),
+    "lireval":  ("read",      "reading"),
+    "silavel":  ("write",     "writing"),
+    "aelovel":  ("sing",      "singing"),
+    "virael":   ("shout",     "shouting"),
+    "solivar":  ("whisper",   "whispering"),
     # Motion
-    "runak":    ("run",       "running"),
-    "jumbad":   ("jump",      "jumping"),
-    "retorn":   ("return",    "returning"),
-    "entrak":   ("enter",     "entering"),
-    "leavak":   ("leave",     "leaving"),
-    "climbag":  ("climb",     "climbing"),
-    "falan":    ("fall",      "falling"),
-    "throwan":  ("throw",     "throwing"),
-    "pushak":   ("push",      "pushing"),
-    "pulad":    ("pull",      "pulling"),
+    "talovel":  ("run",       "running"),
+    "vilanor":  ("jump",      "jumping"),
+    "aeravel":  ("return",    "returning"),
+    "anavor":   ("enter",     "entering"),
+    "laevoran": ("leave",     "leaving"),
+    "solovar":  ("climb",     "climbing"),
+    "luvorn":   ("fall",      "falling"),
+    "arivel":   ("throw",     "throwing"),
+    "telavar":  ("push",      "pushing"),
+    "oravel":   ("pull",      "pulling"),
     # Mental
-    "thinkar":  ("think",     "thinking"),
-    "remembrak":("remember",  "remembering"),
-    "forgetak": ("forget",    "forgetting"),
-    "belivan":  ("believe",   "believing"),
-    "wantak":   ("want",      "wanting"),
-    "chosar":   ("choose",    "choosing"),
-    "planak":   ("plan",      "planning"),
-    "imagak":   ("imagine",   "imagining"),
+    "aethivar": ("think",     "thinking"),
+    "elorivan": ("remember",  "remembering"),
+    "falovel":  ("forget",    "forgetting"),
+    "vaethirel":("believe",   "believing"),
+    "selavor":  ("want",      "wanting"),
+    "thilovar": ("choose",    "choosing"),
+    "alviran":  ("plan",      "planning"),
+    "ilovaen":  ("imagine",   "imagining"),
     # Emotion
-    "lovak":    ("love",      "loving"),
-    "hatak":    ("hate",      "hating"),
-    "fearan":   ("fear",      "fearing"),
-    "joyan":    ("rejoice",   "rejoicing"),
-    "mournad":  ("mourn",     "mourning"),
-    "hopak":    ("hope",      "hoping"),
-    "trustad":  ("trust",     "trusting"),
+    "elavar":   ("love",      "loving"),
+    "narivan":  ("hate",      "hating"),
+    "drelovar": ("fear",      "fearing"),
+    "elarovel": ("rejoice",   "rejoicing"),
+    "sorviran": ("mourn",     "mourning"),
+    "lorivir":  ("hope",      "hoping"),
+    "vaelavar": ("trust",     "trusting"),
     # Social & physical
-    "helpak":   ("help",      "helping"),
-    "figtak":   ("fight",     "fighting"),
-    "rulad":    ("rule",      "ruling"),
-    "tradak":   ("trade",     "trading"),
-    "sharad":   ("share",     "sharing"),
-    "joinak":   ("join",      "joining"),
-    "makad":    ("make",      "making"),
-    "brekan":   ("break",     "breaking"),
-    "fixar":    ("fix",       "fixing"),
-    "openak":   ("open",      "opening"),
-    "klozad":   ("close",     "closing"),
-    # Basic language
-    "izak":     ("be",        "being"),
-    "govan":    ("go",        "going"),
-    "silend":   ("silence",   "silencing"),
+    "alivor":   ("help",      "helping"),
+    "teravel":  ("fight",     "fighting"),
+    "saliver":  ("rule",      "ruling"),
+    "velavan":  ("trade",     "trading"),
+    "olivaen":  ("share",     "sharing"),
+    "loravan":  ("join",      "joining"),
+    "alvorel":  ("make",      "making"),
+    "tiravel":  ("break",     "breaking"),
+    "nalavar":  ("fix",       "fixing"),
+    "aeluvar":  ("open",      "opening"),
+    "naoluvar": ("close",     "closing"),
 }
 
 # ---------------------------------------------------------------------------
@@ -366,163 +372,167 @@ PAST_PARTICIPLE: dict[str, str] = {
 
 NOUN_EN: dict[str, str] = {
     # Core
-    "manu": "person", "childa": "child", "watra": "water",
-    "stonu": "stone", "truku": "tree", "burda": "bird",
-    "homu": "house", "rotha": "path", "fudo": "food",
-    "sunu": "sun", "handu": "hand", "rivna": "river",
-    "mounta": "mountain", "worda": "word", "besta": "animal",
-    "fyru": "fire",
-    "manun": "people", "childan": "children", "watran": "waters",
-    "stonun": "stones", "trukun": "trees", "burdan": "birds",
-    "homun": "houses", "rothan": "paths", "fudon": "foods",
-    "sunun": "suns", "handun": "hands", "rivnan": "rivers",
-    "mountan": "mountains", "wordan": "words", "bestan": "animals",
-    "fyrun": "fires",
+    "laeva": "person",   "laevan": "people",
+    "nirela": "child",   "nirelan": "children",
+    "thoevi": "water",   "thoevin": "waters",
+    "thore": "stone",    "thoren": "stones",
+    "silvao": "tree",    "silvaon": "trees",
+    "viroela": "bird",   "viroelan": "birds",
+    "taelo": "house",    "taelon": "houses",
+    "mirae": "path",     "miraen": "paths",
+    "savori": "food",    "savorin": "foods",
+    "aelura": "sun",     "aeluran": "suns",
+    "nalvae": "hand",    "nalvaen": "hands",
+    "sorivi": "river",   "sorivin": "rivers",
+    "talvore": "mountain","talvoren": "mountains",
+    "voriva": "word",    "vorivan": "words",
+    "veldae": "animal",  "veldaen": "animals",
+    "nirvae": "fire",    "nirvaen": "fires",
     # Body parts
-    "dava": "head", "davan": "heads",
-    "oku": "eye", "okun": "eyes",
-    "mova": "mouth", "movan": "mouths",
-    "nasu": "nose", "nasun": "noses",
-    "braku": "arm", "brakun": "arms",
-    "legu": "leg", "legun": "legs",
-    "fotu": "foot", "fotun": "feet",
-    "kordu": "heart", "kordun": "hearts",
-    "ventra": "stomach", "ventran": "stomachs",
-    "chesta": "chest", "chestan": "chests",
-    "doru": "back", "dorun": "backs",
-    "skinu": "skin", "skinun": "skins",
+    "delva": "head",     "delvan": "heads",
+    "orilu": "eye",      "orilun": "eyes",
+    "thilvo": "mouth",   "thilvon": "mouths",
+    "silno": "nose",     "silnon": "noses",
+    "nalvore": "arm",    "nalvoren": "arms",
+    "lorve": "leg",      "lorven": "legs",
+    "thivore": "foot",   "thivoren": "feet",
+    "aelvo": "heart",    "aelvon": "hearts",
+    "serva": "stomach",  "servan": "stomachs",
+    "thelvae": "chest",  "thelvaen": "chests",
+    "dorvae": "back",    "dorvaen": "backs",
+    "velsae": "skin",    "velsaen": "skins",
     # Nature
-    "skavu": "sky", "skavun": "skies",
-    "winda": "wind", "windan": "winds",
-    "ertha": "earth", "erthan": "earths",
-    "ranu": "rain", "ranun": "rains",
-    "snova": "snow", "snovan": "snows",
-    "kluda": "cloud", "kludan": "clouds",
-    "noku": "night", "nokun": "nights",
-    "dayo": "day", "dayon": "days",
-    "staru": "star", "starun": "stars",
-    "sova": "sea", "sovan": "seas",
-    "valu": "valley", "valun": "valleys",
-    "dusta": "dust", "dustan": "dusts",
-    "rocha": "rock", "rochan": "rocks",
-    "sanda": "sand", "sandan": "sands",
-    "foresta": "forest", "forestan": "forests",
-    "fielda": "field", "fieldan": "fields",
+    "laevori": "sky",    "laevorin": "skies",
+    "milore": "wind",    "miloren": "winds",
+    "norvi": "earth",    "norvin": "earths",
+    "silvori": "rain",   "silvorin": "rains",
+    "sorvia": "snow",    "sorvian": "snows",
+    "lorvilo": "cloud",  "lorvilon": "clouds",
+    "morvilo": "night",  "morvilon": "nights",
+    "norivia": "day",    "norivian": "days",
+    "aelvori": "star",   "aelvorin": "stars",
+    "thelori": "sea",    "thelorin": "seas",
+    "nilora": "valley",  "niloran": "valleys",
+    "mirvalo": "dust",   "mirvalon": "dusts",
+    "talvori": "rock",   "talvorin": "rocks",
+    "selori": "sand",    "selorin": "sands",
+    "vaelori": "forest", "vaeorin": "forests",
+    "alorvi": "field",   "alorvin": "fields",
     # Abstract
-    "tima": "time", "timan": "times",
-    "truta": "truth", "trutan": "truths",
-    "lifa": "life", "lifan": "lives",
-    "morta": "death", "mortan": "deaths",
-    "powra": "power", "powran": "powers",
-    "knowu": "knowledge", "knowun": "knowledges",
-    "fathu": "faith", "fathun": "faiths",
-    "ritu": "justice", "ritun": "justices",
-    "duta": "duty", "dutan": "duties",
-    "sekru": "secret", "sekrun": "secrets",
-    "dreamu": "dream", "dreamun": "dreams",
-    "memorya": "memory", "memoryan": "memories",
+    "tilovi": "time",       "tilovin": "times",
+    "valori": "truth",      "valorin": "truths",
+    "alorivi": "life",      "alorivin": "lives",
+    "morive": "death",      "moriven": "deaths",
+    "torvi": "power",       "torvin": "powers",
+    "alavori": "knowledge", "alavorin": "knowledges",
+    "saevori": "faith",     "saevorin": "faiths",
+    "rilova": "justice",    "rilovan": "justices",
+    "dalvori": "duty",      "dalvorin": "duties",
+    "mirovi": "secret",     "mirovin": "secrets",
+    "elvorae": "dream",     "elvoraen": "dreams",
+    "milorvi": "memory",    "milorvin": "memories",
     # Social
-    "famla": "family", "famlan": "families",
-    "frenda": "friend", "френdan": "friends",
-    "enemu": "enemy", "enemun": "enemies",
-    "chefa": "leader", "chefan": "leaders",
-    "koma": "community", "koman": "communities",
-    "gesta": "guest", "gestan": "guests",
-    "voka": "voice", "vokan": "voices",
-    "namu": "name", "namun": "names",
-    "rula": "law", "rulan": "laws",
-    "wara": "war", "waran": "wars",
-    "paka": "accord", "pakan": "accords",
-    "giftu": "gift", "giftun": "gifts",
+    "selvori": "family",    "selvorin": "families",
+    "vaelova": "friend",    "vaelovan": "friends",
+    "narovi": "enemy",      "narovin": "enemies",
+    "thalvori": "leader",   "thalvorin": "leaders",
+    "solori": "community",  "solorin": "communities",
+    "lorivae": "guest",     "lorivaen": "guests",
+    "vilorae": "voice",     "viloraen": "voices",
+    "aelova": "name",       "aelovan": "names",
+    "ralovi": "law",        "ralovin": "laws",
+    "terovi": "war",        "terovin": "wars",
+    "paelovi": "accord",    "paelovin": "accords",
+    "tilorvae": "gift",     "tilorvaen": "gifts",
     # Emotion nouns
-    "joya": "joy", "joyan": "joys",
-    "soru": "sorrow", "sorun": "sorrows",
-    "ragu": "anger", "ragun": "angers",
-    "dreda": "fear", "dredan": "fears",
-    "lovu": "love", "lovun": "loves",
-    "hatu": "hate", "hatun": "hates",
-    "shamu": "shame", "shamun": "shames",
-    "pisu": "peace", "pisun": "peaces",
-    "kalu": "loneliness", "kalun": "lonelinesses",
-    "glayu": "happiness", "glayun": "happinesses",
-    "thoru": "grief", "thorun": "griefs",
-    "ventu": "pride", "ventun": "prides",
-    "envu": "envy", "envun": "envies",
-    "remu": "regret", "remun": "regrets",
-    "hopa": "hope", "hopan": "hopes",
-    "trusta": "trust", "trustan": "trusts",
-    "kura": "courage", "kuran": "courages",
-    "duba": "doubt", "duban": "doubts",
-    "wundu": "wonder", "wundun": "wonders",
-    "komforta": "comfort", "komfortan": "comforts",
-    "nostu": "longing", "nostun": "longings",
+    "glorvi": "joy",        "glorvin": "joys",
+    "sorovi": "sorrow",     "sorovin": "sorrows",
+    "nerovi": "anger",      "nerovin": "angers",
+    "drelovi": "fear",      "drelovin": "fears",
+    "elorvi": "love",       "elorvin": "loves",
+    "narvori": "hate",      "narvorin": "hates",
+    "saelvori": "shame",    "saelvorin": "shames",
+    "silvovi": "peace",     "silvovin": "peaces",
+    "kalorvi": "loneliness","kalorvin": "lonelinesses",
+    "gloraevi": "happiness","gloraevin": "happinesses",
+    "sorvori": "grief",     "sorvorin": "griefs",
+    "velorvi": "pride",     "velorvin": "prides",
+    "naevori": "envy",      "naevorin": "envies",
+    "relorvi": "regret",    "relorvin": "regrets",
+    "lorivi": "hope",       "lorivin": "hopes",
+    "thelvovi": "trust",    "thelvovin": "trusts",
+    "talorvae": "courage",  "talorvaen": "courages",
+    "daelovi": "doubt",     "daeolovin": "doubts",
+    "nilorvae": "wonder",   "nilorvaen": "wonders",
+    "aelvorae": "comfort",  "aelvoraen": "comforts",
+    "velnostu": "longing",  "velnostun": "longings",
 }
 
 PRON_EN: dict[str, str] = {
-    "ayu": "I", "yu": "you", "hiru": "he",
-    "ayun": "we", "yun": "you", "hirun": "they",
+    "elva": "I",   "sova": "you", "thira": "he",
+    "elvan": "we", "sovan": "you", "thiran": "they",
 }
 
 PRON_OBJ_EN: dict[str, str] = {
-    "ayu": "me", "yu": "you", "hiru": "him",
-    "ayun": "us", "yun": "you", "hirun": "them",
+    "elva": "me",  "sova": "you", "thira": "him",
+    "elvan": "us", "sovan": "you", "thiran": "them",
 }
 
 POSS_EN: dict[str, str] = {
-    "ayugar": "my", "yugar": "your", "hirugar": "his/her/its",
-    "ayungar": "our", "yungar": "your", "hirungar": "their",
+    "elvanar": "my",    "sovanar": "your",  "thiranar": "his/her/its",
+    "elvanen": "our",   "sovanen": "your",  "thiranen": "their",
 }
 
-DET_EN: dict[str, str] = {"gar": "the", "brath": "a"}
+DET_EN: dict[str, str] = {"al": "the", "elo": "a"}
 
 ADJ_EN: dict[str, str] = {
     # Core
-    "bigrath": "big", "oldrath": "old", "darkoth": "dark",
-    "swifth": "fast", "smaloth": "small", "koldrith": "cold",
-    "strongath": "strong", "wethrakh": "wet",
+    "loravil": "big",     "velasil": "old",     "mornivil": "dark",
+    "talomil": "fast",    "elovil": "small",    "sorvil": "cold",
+    "theravil": "strong", "thoelvil": "wet",
     # Size & shape
-    "longrath": "long", "shoroth": "short", "roundath": "round",
-    "deeprith": "deep", "widrath": "wide", "narrath": "narrow",
-    "talloth": "tall", "flatrath": "flat",
+    "laeronil": "long",   "nilorvil": "short",  "voravil": "round",
+    "thorivil": "deep",   "velravil": "wide",   "narovil": "narrow",
+    "thalvil": "tall",    "selorvil": "flat",
     # Sensory
-    "hotrath": "hot", "brightrath": "bright", "loudoth": "loud",
-    "sharpoth": "sharp", "dulrith": "dull", "smoothath": "smooth",
-    "roughoth": "rough",
+    "nirvil": "hot",      "aelorvil": "bright", "lorovil": "loud",
+    "saelvil": "sharp",   "milorvil": "dull",   "silvorvil": "smooth",
+    "norivil": "rough",
     # Evaluative
-    "godrath": "good", "badoth": "bad", "newrath": "new",
-    "truerath": "true", "falsoth": "false", "holyrath": "holy",
-    "wisrath": "wise", "fooloth": "foolish", "noblrath": "noble",
+    "aelanil": "good",    "naranil": "bad",     "elvanil": "new",
+    "valoril": "true",    "nalovil": "false",   "aelvoril": "holy",
+    "veloril": "wise",    "naelvoril": "foolish","thalvoril": "noble",
     # Emotion
-    "jorath": "joyful", "sorath": "sorrowful", "ragoth": "angry",
-    "dredath": "fearful", "lovrath": "loving", "hatoth": "hateful",
-    "kalerith": "lonely", "glayrath": "happy", "thoroth": "grieving",
-    "hoprath": "hopeful", "kurrath": "courageous", "wundrath": "awestruck",
-    "duboth": "doubtful", "venturith": "proud",
+    "glorvil": "joyful",  "sorovil": "sorrowful","nerovil": "angry",
+    "drelovil": "fearful","elorvil": "loving",  "narvorvil": "hateful",
+    "kalovil": "lonely",  "gloraevil": "happy", "sorvovil": "grieving",
+    "lorivil": "hopeful", "talorvil": "courageous","naevovil": "doubtful",
+    "velovil": "proud",
     # State
-    "welath": "well",
+    "saeril": "well",
 }
 
 PREP_EN: dict[str, str] = {
-    "tov": "to", "from": "from", "nak": "in", "wid": "with",
-    "thov": "about", "for": "for",
+    "vil": "to",  "mira": "from", "ana": "in",
+    "leva": "with", "thael": "about", "ori": "for",
 }
 
 TIME_EN: dict[str, str] = {
-    "nowom": "now", "yestom": "yesterday", "morom": "tomorrow",
-    "evrom": "always", "nevrom": "never", "wonsom": "once",
+    "salom": "now",       "verom": "yesterday", "norelom": "tomorrow",
+    "aevorom": "always",  "navorom": "never",   "eluvom": "once",
 }
 
 QN_EN: dict[str, str] = {
-    "huzh": "who", "wazh": "what", "werazh": "where", "wenazh": "when",
-    "kovazh": "how",
+    "sivael": "who", "tavael": "what", "lorvael": "where",
+    "morvael": "when", "alvael": "how",
 }
 
 LOC_EN: dict[str, str] = {
-    "heva": "here",
-    "theva": "there",
+    "ilra": "here",
+    "ulra": "there",
 }
 
 GREET_EN: dict[str, str] = {
-    "gretu": "hello",
-    "valedu": "goodbye",
+    "laevel": "hello",
+    "sorvael": "goodbye",
 }

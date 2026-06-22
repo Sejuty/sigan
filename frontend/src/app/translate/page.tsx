@@ -107,7 +107,7 @@ export default function TranslatePage() {
           onKeyDown={handleKeyDown}
           placeholder={
             direction === "to_english"
-              ? "ayu siganovrak gar truku"
+              ? "elva velorovrak al silvao"
               : "I was seeing the tree"
           }
           className={`w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-sm outline-none focus:border-violet-500 transition-colors resize-none placeholder-slate-700 ${

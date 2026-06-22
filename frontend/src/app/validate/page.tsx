@@ -22,11 +22,11 @@ type Result = {
 };
 
 const EXAMPLES = [
-  "ayu siganovrak gar truku",
-  "hiru walkag tov gar homu yestom",
-  "ayu noth spekor worda",
-  "huzh findar gar rotha",
-  "ayun lovakov hirun",
+  "elva velorovrak al silvao",
+  "thira mirel vil al taelo verom",
+  "elva nael thaevel al voriva",
+  "sivael seluvar al mirae",
+  "elvan elavarov thiran",
 ];
 
 export default function ValidatePage() {
@@ -70,7 +70,7 @@ export default function ValidatePage() {
             value={input}
             onChange={e => setInput(e.target.value)}
             onKeyDown={e => e.key === "Enter" && run()}
-            placeholder="ayu sigan gar truku"
+            placeholder="elva velor al silvao"
             className="sigan flex-1 bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-sm text-slate-100 placeholder-slate-700 outline-none focus:border-violet-500 transition-colors"
           />
           <button

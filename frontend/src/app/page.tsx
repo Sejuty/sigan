@@ -9,33 +9,33 @@ const API = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
 type Example = { sigan: string; english: string; group: string };
 
 const EXAMPLES: Example[] = [
-  { sigan: "gretu",                  english: "Hello",              group: "Greetings" },
-  { sigan: "valedu",                 english: "Goodbye",            group: "Greetings" },
-  { sigan: "kovazh izak yu",         english: "How are you?",       group: "Greetings" },
-  { sigan: "ayu izak welath",        english: "I am well",          group: "Greetings" },
-  { sigan: "ayu izak Sejuty",        english: "I am Sejuty",        group: "Identity"  },
-  { sigan: "silend",                 english: "Silence!",           group: "Commands"  },
-  { sigan: "ayu govan theva",        english: "I go there",         group: "Motion"    },
-  { sigan: "ayu govan heva",         english: "I go here",          group: "Motion"    },
-  { sigan: "ayu sigan yu",           english: "I see you",          group: "Everyday"  },
-  { sigan: "ayu lovak yu",           english: "I love you",         group: "Everyday"  },
-  { sigan: "ayu noth spekor",        english: "I do not speak",     group: "Everyday"  },
-  { sigan: "ayu etak fudo",          english: "I eat food",         group: "Everyday"  },
-  { sigan: "hiru walkag gar rotha",  english: "He walks the path",  group: "Everyday"  },
-  { sigan: "huzh sigan yu",          english: "Who sees you?",      group: "Questions" },
-  { sigan: "ayu wantak fudo",        english: "I want food",        group: "Everyday"  },
-  { sigan: "ayu spekor worda",       english: "I speak word",       group: "Everyday"  },
+  { sigan: "laevel",                   english: "Hello",              group: "Greetings" },
+  { sigan: "sorvael",                  english: "Goodbye",            group: "Greetings" },
+  { sigan: "alvael aevil sova",        english: "How are you?",       group: "Greetings" },
+  { sigan: "elva aevil saeril",        english: "I am well",          group: "Greetings" },
+  { sigan: "elva aevil Sejuty",        english: "I am Sejuty",        group: "Identity"  },
+  { sigan: "silvonor",                 english: "Silence!",           group: "Commands"  },
+  { sigan: "elva lorel ulra",          english: "I go there",         group: "Motion"    },
+  { sigan: "elva lorel ilra",          english: "I go here",          group: "Motion"    },
+  { sigan: "elva velor sova",          english: "I see you",          group: "Everyday"  },
+  { sigan: "elva elavar sova",         english: "I love you",         group: "Everyday"  },
+  { sigan: "elva nael thaevel",        english: "I do not speak",     group: "Everyday"  },
+  { sigan: "elva savorel al savori",   english: "I eat the food",     group: "Everyday"  },
+  { sigan: "thira mirel al mirae",     english: "He walks the path",  group: "Everyday"  },
+  { sigan: "sivael velor sova",        english: "Who sees you?",      group: "Questions" },
+  { sigan: "elva selavor al savori",   english: "I want the food",    group: "Everyday"  },
+  { sigan: "elva thaevel al voriva",   english: "I speak the word",   group: "Everyday"  },
 ];
 
 // Hardcoded default — shows instantly without needing the API running
-const DEFAULT_IDX = 6; // "ayu govan theva"
+const DEFAULT_IDX = 6; // "elva lorel ulra"
 const DEFAULT_TREE: TreeNode = {
   symbol: "S",
   children: [
     {
       symbol: "NP",
       children: [
-        { symbol: "Pron", token: "ayu", tense: null, aspect: null, children: [] },
+        { symbol: "Pron", token: "elva", tense: null, aspect: null, children: [] },
       ],
     },
     {
@@ -44,32 +44,32 @@ const DEFAULT_TREE: TreeNode = {
         {
           symbol: "VP",
           children: [
-            { symbol: "V", token: "govan", tense: "present", aspect: "simple", children: [] },
+            { symbol: "V", token: "lorel", tense: "present", aspect: "simple", children: [] },
           ],
         },
-        { symbol: "Loc", token: "theva", tense: null, aspect: null, children: [] },
+        { symbol: "Loc", token: "ulra", tense: null, aspect: null, children: [] },
       ],
     },
   ],
 };
 
 const SUFFIXES = [
-  { pattern: "bare present",      suffix: "—",      example: "sigan"      },
-  { pattern: "is/am/are + -ing",  suffix: "-rak",   example: "siganrak"   },
-  { pattern: "has/have + -ed",    suffix: "-dor",   example: "sigandor"   },
-  { pattern: "past (saw / went)", suffix: "-ov",    example: "siganov"    },
-  { pattern: "was/were + -ing",   suffix: "-ovrak", example: "siganovrak" },
-  { pattern: "will + verb",       suffix: "-en",    example: "siganen"    },
-  { pattern: "will be + -ing",    suffix: "-enrak", example: "siganenrak" },
+  { pattern: "bare present",      suffix: "—",      example: "velor"      },
+  { pattern: "is/am/are + -ing",  suffix: "-rak",   example: "velorrak"   },
+  { pattern: "has/have + -ed",    suffix: "-dor",   example: "velordor"   },
+  { pattern: "past (saw / went)", suffix: "-ov",    example: "velorov"    },
+  { pattern: "was/were + -ing",   suffix: "-ovrak", example: "velorovrak" },
+  { pattern: "will + verb",       suffix: "-en",    example: "veloren"    },
+  { pattern: "will be + -ing",    suffix: "-enrak", example: "velorenrak" },
 ];
 
 const PRONOUNS = [
-  { sigan: "ayu",   en: "I / me"      },
-  { sigan: "yu",    en: "you (sg)"    },
-  { sigan: "hiru",  en: "he / she / it" },
-  { sigan: "ayun",  en: "we / us"     },
-  { sigan: "yun",   en: "you (pl)"   },
-  { sigan: "hirun", en: "they / them" },
+  { sigan: "elva",   en: "I / me"       },
+  { sigan: "sova",   en: "you (sg)"     },
+  { sigan: "thira",  en: "he / she / it"},
+  { sigan: "elvan",  en: "we / us"      },
+  { sigan: "sovan",  en: "you (pl)"     },
+  { sigan: "thiran", en: "they / them"  },
 ];
 
 const GROUP_COLORS: Record<string, string> = {
@@ -277,7 +277,7 @@ export default function HomePage() {
                 {(
                   [
                     ["Subject",      "bg-sky-500/10     text-sky-300     border-sky-500/20"    ],
-                    ["noth?",        "bg-red-500/10     text-red-300     border-red-500/20"    ],
+                    ["nael?",        "bg-red-500/10     text-red-300     border-red-500/20"    ],
                     ["Verb",         "bg-emerald-500/10 text-emerald-300 border-emerald-500/20"],
                     ["Object",       "bg-sky-500/10     text-sky-300     border-sky-500/20"    ],
                     ["Prep phrase",  "bg-orange-500/10  text-orange-300  border-orange-500/20" ],
@@ -293,7 +293,7 @@ export default function HomePage() {
                 ))}
               </div>
               <p className="text-xs text-slate-600 mt-1">
-                <span className="sigan text-slate-500">noth</span> immediately before the verb negates it.
+                <span className="sigan text-slate-500">nael</span> immediately before the verb negates it.
               </p>
             </div>
           </div>

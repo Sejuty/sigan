@@ -115,11 +115,11 @@ def _build_reverse_lookup() -> None:
 
     # Explicit pronoun overrides — singular "you" wins over plural
     _EN_TO_SIGAN.update({
-        "he":   ("hiru",  "Pron"), "she":  ("hiru",  "Pron"), "it":   ("hiru",  "Pron"),
-        "they": ("hirun", "Pron"),
-        "you":  ("yu",    "Pron"),
-        "me":   ("ayu",   "Pron"), "us":   ("ayun",  "Pron"),
-        "him":  ("hiru",  "Pron"), "her":  ("hiru",  "Pron"), "them": ("hirun", "Pron"),
+        "he":   ("thira",  "Pron"), "she":  ("thira",  "Pron"), "it":   ("thira",  "Pron"),
+        "they": ("thiran", "Pron"),
+        "you":  ("sova",   "Pron"),
+        "me":   ("elva",   "Pron"), "us":   ("elvan",  "Pron"),
+        "him":  ("thira",  "Pron"), "her":  ("thira",  "Pron"), "them": ("thiran", "Pron"),
     })
 
     # Verbs go into their own separate map
@@ -217,7 +217,7 @@ def _translate_node(node: ParseNode, role: str = "subject") -> str:
             qn_text = _translate_node(L)
             # Subject-position QNs ("who"/"what") act as the grammatical subject;
             # adverbial QNs ("how"/"where"/"when") need the VP's NP for agreement.
-            if qn_surf in ("huzh", "wazh"):
+            if qn_surf in ("sivael", "tavael"):
                 return f"{qn_text} {_translate_node(R)}?"
             # Adverbial QN: derive agreement from NP inside VP (treat as logical subject)
             vp_node = R
@@ -463,7 +463,7 @@ def english_to_sigan(sentence: str) -> dict:
 
     suffix = _SIGAN_SUFFIX.get((parsed["tense"], parsed["aspect"]), "")
     if parsed["negated"]:
-        tokens.append("noth")
+        tokens.append("nael")
     tokens.append(stem + suffix)
 
     if parsed.get("complement"):
