@@ -16,6 +16,7 @@ export default function TranslatePage() {
   const [loading, setLoading]     = useState(false);
   const [error, setError]         = useState("");
   const [history, setHistory]     = useState<HistoryItem[]>([]);
+  const [copied, setCopied]       = useState(false);
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
@@ -62,60 +63,114 @@ export default function TranslatePage() {
     if ((e.ctrlKey || e.metaKey) && e.key === "Enter") translate();
   };
 
-  const flipDirection = () => {
+  const flip = () => {
     setDirection(d => d === "to_english" ? "to_sigan" : "to_english");
     setInput(output);
     setOutput("");
     setError("");
+    setCopied(false);
+  };
+
+  const copyOutput = async () => {
+    if (!output) return;
+    await navigator.clipboard.writeText(output);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 1500);
+  };
+
+  const changeDirection = (d: Direction) => {
+    setDirection(d);
+    setOutput("");
+    setError("");
+    setCopied(false);
   };
 
   const fromLabel = direction === "to_english" ? "Sigan"   : "English";
   const toLabel   = direction === "to_english" ? "English" : "Sigan";
-  const isSigan   = (dir: Direction, role: "in" | "out") =>
-    (role === "in"  && dir === "to_english") ||
-    (role === "out" && dir === "to_sigan");
+  const inputIsSigan  = direction === "to_english";
+  const outputIsSigan = direction === "to_sigan";
 
   return (
-    <div className="mx-auto max-w-3xl px-6 py-10 flex flex-col gap-8">
-      {/* Direction toggle */}
-      <div className="flex justify-center">
-        <div className="flex bg-slate-900 border border-slate-800 rounded-xl p-1 gap-1">
-          {(["to_english", "to_sigan"] as Direction[]).map(d => (
-            <button
-              key={d}
-              onClick={() => { setDirection(d); setOutput(""); setError(""); }}
-              className={`px-5 py-1.5 rounded-lg text-sm font-medium transition-colors ${
-                direction === d
-                  ? "bg-violet-500/20 text-violet-300"
-                  : "text-slate-400 hover:text-slate-200"
-              }`}
-            >
-              {d === "to_english" ? "Sigan → English" : "English → Sigan"}
-            </button>
-          ))}
-        </div>
-      </div>
+    <div className="mx-auto max-w-5xl px-6 py-10 flex flex-col gap-8">
 
-      {/* Input */}
-      <div className="flex flex-col gap-2">
-        <label className="text-xs text-slate-500 uppercase tracking-wider">{fromLabel}</label>
-        <textarea
-          ref={inputRef}
-          rows={4}
-          value={input}
-          onChange={e => setInput(e.target.value)}
-          onKeyDown={handleKeyDown}
-          placeholder={
-            direction === "to_english"
-              ? "elva velorovrak al silvao"
-              : "I was seeing the tree"
-          }
-          className={`w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-sm outline-none focus:border-violet-500 transition-colors resize-none placeholder-slate-700 ${
-            isSigan(direction, "in") ? "sigan" : ""
-          }`}
-        />
-        <div className="flex items-center justify-between">
-          <p className="text-xs text-slate-600">Ctrl+Enter to translate</p>
+      {/* Two-panel translator */}
+      <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden">
+        <div className="flex flex-col md:flex-row">
+
+          {/* Input panel */}
+          <div className="flex-1 flex flex-col min-w-0">
+            <div className="px-4 py-3 border-b border-slate-800">
+              <span className="text-xs text-slate-500 uppercase tracking-wider">{fromLabel}</span>
+            </div>
+            <textarea
+              ref={inputRef}
+              rows={7}
+              value={input}
+              onChange={e => setInput(e.target.value)}
+              onKeyDown={handleKeyDown}
+              placeholder={
+                direction === "to_english"
+                  ? "elva velorovrak al silvao"
+                  : "I was seeing the tree"
+              }
+              className={`w-full bg-transparent px-4 py-4 text-sm outline-none resize-none placeholder-slate-700 text-slate-100 ${
+                inputIsSigan ? "sigan" : ""
+              }`}
+            />
+          </div>
+
+          {/* Output panel */}
+          <div className="flex-1 flex flex-col min-w-0 border-t md:border-t-0 md:border-l border-slate-800">
+            <div className="px-4 py-3 border-b border-slate-800 flex items-center justify-between">
+              <span className="text-xs text-slate-500 uppercase tracking-wider">{toLabel}</span>
+              {output && (
+                <button
+                  onClick={copyOutput}
+                  className="text-xs text-slate-500 hover:text-violet-300 transition-colors"
+                >
+                  {copied ? "✓ copied" : "copy"}
+                </button>
+              )}
+            </div>
+            <div className={`flex-1 px-4 py-4 text-sm min-h-[7rem] ${outputIsSigan ? "sigan" : ""}`}>
+              {loading ? (
+                <span className="text-slate-600 animate-pulse">Translating…</span>
+              ) : error ? (
+                <span className="text-red-400">{error}</span>
+              ) : output ? (
+                <span className="text-slate-100">{output}</span>
+              ) : (
+                <span className="text-slate-700">Translation will appear here</span>
+              )}
+            </div>
+          </div>
+        </div>
+
+        {/* Footer action bar */}
+        <div className="border-t border-slate-800 flex items-center gap-3 px-4 py-3">
+          <div className="flex gap-0.5 bg-slate-950 rounded-lg p-0.5">
+            {(["to_english", "to_sigan"] as Direction[]).map(d => (
+              <button
+                key={d}
+                onClick={() => changeDirection(d)}
+                className={`px-3 py-1 text-xs font-medium rounded-md transition-colors ${
+                  direction === d
+                    ? "bg-violet-500/20 text-violet-300"
+                    : "text-slate-500 hover:text-slate-300"
+                }`}
+              >
+                {d === "to_english" ? "Sig → En" : "En → Sig"}
+              </button>
+            ))}
+          </div>
+          <button
+            onClick={flip}
+            title="Swap input ↔ output"
+            className="text-xs text-slate-500 hover:text-violet-300 transition-colors"
+          >
+            ⇄ swap
+          </button>
+          <span className="text-xs text-slate-600 flex-1">Ctrl+Enter</span>
           <button
             onClick={translate}
             disabled={loading || !input.trim()}
@@ -125,34 +180,6 @@ export default function TranslatePage() {
           </button>
         </div>
       </div>
-
-      {/* Output */}
-      {(output || error) && (
-        <div className="flex flex-col gap-2">
-          <div className="flex items-center justify-between">
-            <label className="text-xs text-slate-500 uppercase tracking-wider">{toLabel}</label>
-            {output && (
-              <button
-                onClick={flipDirection}
-                className="text-xs text-slate-500 hover:text-violet-300 transition-colors"
-              >
-                ⇄ flip direction
-              </button>
-            )}
-          </div>
-          {error ? (
-            <div className="bg-red-500/10 border border-red-500/20 rounded-xl px-4 py-3 text-red-400 text-sm">
-              {error}
-            </div>
-          ) : (
-            <div className={`bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-slate-100 text-sm min-h-[3rem] ${
-              isSigan(direction, "out") ? "sigan" : ""
-            }`}>
-              {output}
-            </div>
-          )}
-        </div>
-      )}
 
       {/* History */}
       {history.length > 0 && (
@@ -170,18 +197,23 @@ export default function TranslatePage() {
             {history.map((h, i) => (
               <button
                 key={i}
-                onClick={() => { setDirection(h.direction); setInput(h.input); setOutput(h.output); setError(""); }}
-                className="w-full text-left flex items-center gap-2 px-3 py-2 rounded-lg bg-slate-900/60 hover:bg-slate-900 border border-slate-800 hover:border-slate-700 transition-colors group"
+                onClick={() => {
+                  setDirection(h.direction);
+                  setInput(h.input);
+                  setOutput(h.output);
+                  setError("");
+                  setCopied(false);
+                }}
+                className="w-full text-left flex items-center gap-2 px-3 py-2 rounded-lg bg-slate-900/60 hover:bg-slate-900 border border-slate-800 hover:border-slate-700 transition-colors"
               >
-                <span className={`text-xs text-slate-300 truncate ${
-                  (h.direction === "to_english") ? "sigan" : ""
-                }`}>
+                <span className="text-[10px] px-1.5 py-0.5 rounded bg-slate-800 text-slate-500 shrink-0 font-mono">
+                  {h.direction === "to_english" ? "Sig→En" : "En→Sig"}
+                </span>
+                <span className={`text-xs text-slate-300 truncate ${h.direction === "to_english" ? "sigan" : ""}`}>
                   {h.input}
                 </span>
                 <span className="text-slate-600 shrink-0 text-xs">→</span>
-                <span className={`text-xs text-slate-400 truncate flex-1 ${
-                  (h.direction === "to_sigan") ? "sigan" : ""
-                }`}>
+                <span className={`text-xs text-slate-400 truncate flex-1 ${h.direction === "to_sigan" ? "sigan" : ""}`}>
                   {h.output}
                 </span>
               </button>

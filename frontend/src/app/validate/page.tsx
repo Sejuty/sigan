@@ -36,7 +36,14 @@ export default function ValidatePage() {
   const [error, setError]     = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
 
-  useEffect(() => { inputRef.current?.focus(); }, []);
+  useEffect(() => {
+    const s = new URLSearchParams(window.location.search).get("s");
+    if (s) {
+      run(s);
+    } else {
+      inputRef.current?.focus();
+    }
+  }, []);
 
   const run = async (sentence?: string) => {
     const text = (sentence ?? input).trim();
@@ -45,6 +52,7 @@ export default function ValidatePage() {
     setLoading(true);
     setError("");
     setResult(null);
+    history.replaceState(null, "", `?s=${encodeURIComponent(text)}`);
     try {
       const res = await fetch(`${API}/validate`, {
         method: "POST",

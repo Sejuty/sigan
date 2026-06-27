@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 type Conjugation = {
   tense: string;
@@ -40,10 +40,19 @@ const POS_BADGE: Record<string, string> = {
 };
 
 function ConjugationGrid({ conjugations }: { conjugations: Conjugation[] }) {
+  const [copiedKey, setCopiedKey] = useState<string | null>(null);
+
   const byKey: Record<string, string> = {};
   for (const c of conjugations) {
     byKey[`${c.tense}_${c.aspect}`] = c.form;
   }
+
+  const handleDoubleClick = (key: string, form: string) => {
+    if (!form) return;
+    navigator.clipboard.writeText(form);
+    setCopiedKey(key);
+    setTimeout(() => setCopiedKey(k => (k === key ? null : k)), 1200);
+  };
 
   return (
     <div className="mt-4">
@@ -64,13 +73,23 @@ function ConjugationGrid({ conjugations }: { conjugations: Conjugation[] }) {
             {ASPECT_ORDER.map(aspect => (
               <tr key={aspect}>
                 <td className="py-1.5 pr-3 text-slate-500">{ASPECT_LABEL[aspect]}</td>
-                {TENSE_ORDER.map(tense => (
-                  <td key={tense} className="py-1.5 text-center">
-                    <span className="sigan text-violet-300 text-xs">
-                      {byKey[`${tense}_${aspect}`] ?? "—"}
-                    </span>
-                  </td>
-                ))}
+                {TENSE_ORDER.map(tense => {
+                  const key  = `${tense}_${aspect}`;
+                  const form = byKey[key];
+                  const isCopied = copiedKey === key;
+                  return (
+                    <td
+                      key={tense}
+                      className={`py-1.5 text-center ${form ? "cursor-pointer" : ""}`}
+                      title={form ? "Double-click to copy" : undefined}
+                      onDoubleClick={e => { e.stopPropagation(); handleDoubleClick(key, form); }}
+                    >
+                      <span className={`sigan text-xs transition-colors ${isCopied ? "text-violet-400" : "text-violet-300"}`}>
+                        {isCopied ? "✓" : (form ?? "—")}
+                      </span>
+                    </td>
+                  );
+                })}
               </tr>
             ))}
           </tbody>
@@ -81,8 +100,26 @@ function ConjugationGrid({ conjugations }: { conjugations: Conjugation[] }) {
 }
 
 export default function WordCard({ entry }: { entry: VocabEntry }) {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen]     = useState(false);
+  const [copied, setCopied] = useState(false);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const badge = POS_BADGE[entry.pos] ?? "bg-slate-700 text-slate-300";
+
+  const handleClick = () => {
+    if (timerRef.current) {
+      // second click within 220ms — treat as double click, copy instead of toggle
+      clearTimeout(timerRef.current);
+      timerRef.current = null;
+      navigator.clipboard.writeText(entry.sigan);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1200);
+      return;
+    }
+    timerRef.current = setTimeout(() => {
+      timerRef.current = null;
+      setOpen(o => !o);
+    }, 220);
+  };
 
   return (
     <div
@@ -91,7 +128,8 @@ export default function WordCard({ entry }: { entry: VocabEntry }) {
           ? "border-slate-700 bg-slate-900"
           : "border-slate-800 bg-slate-900/50 hover:border-slate-700 hover:bg-slate-900"
       }`}
-      onClick={() => setOpen(o => !o)}
+      onClick={handleClick}
+      title="Click to expand · Double-click to copy"
     >
       <div className="flex items-center gap-3 px-4 py-3">
         <span className="sigan text-slate-100 font-medium text-sm min-w-[8rem]">
@@ -103,7 +141,8 @@ export default function WordCard({ entry }: { entry: VocabEntry }) {
         <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${badge}`}>
           {entry.pos}
         </span>
-        <span className="text-slate-600 text-xs ml-1">{open ? "▲" : "▼"}</span>
+        {copied && <span className="text-xs text-violet-300 shrink-0">✓</span>}
+        <span className="text-slate-600 text-xs">{open ? "▲" : "▼"}</span>
       </div>
 
       {open && (

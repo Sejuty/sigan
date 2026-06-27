@@ -9,26 +9,51 @@ const API = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
 type Example = { sigan: string; english: string; group: string };
 
 const EXAMPLES: Example[] = [
-  { sigan: "laevel",                   english: "Hello",              group: "Greetings" },
-  { sigan: "sorvael",                  english: "Goodbye",            group: "Greetings" },
-  { sigan: "alvael aevil sova",        english: "How are you?",       group: "Greetings" },
-  { sigan: "elva aevil saeril",        english: "I am well",          group: "Greetings" },
-  { sigan: "elva aevil Sejuty",        english: "I am Sejuty",        group: "Identity"  },
-  { sigan: "silvonor",                 english: "Silence!",           group: "Commands"  },
-  { sigan: "elva lorel ulra",          english: "I go there",         group: "Motion"    },
-  { sigan: "elva lorel ilra",          english: "I go here",          group: "Motion"    },
-  { sigan: "elva velor sova",          english: "I see you",          group: "Everyday"  },
-  { sigan: "elva elavar sova",         english: "I love you",         group: "Everyday"  },
-  { sigan: "elva nael thaevel",        english: "I do not speak",     group: "Everyday"  },
-  { sigan: "elva savorel al savori",   english: "I eat the food",     group: "Everyday"  },
-  { sigan: "thira mirel al mirae",     english: "He walks the path",  group: "Everyday"  },
-  { sigan: "sivael velor sova",        english: "Who sees you?",      group: "Questions" },
-  { sigan: "elva selavor al savori",   english: "I want the food",    group: "Everyday"  },
-  { sigan: "elva thaevel al voriva",   english: "I speak the word",   group: "Everyday"  },
+  // ── Index 0 — shown by default ──────────────────────────────────────────
+  { sigan: "elva velor sova",            english: "I see you",             group: "Everyday"  },
+
+  // ── Greetings ─────────────────────────────────────────────────────────
+  { sigan: "laevel",                     english: "Hello",                 group: "Greetings" },
+  { sigan: "sorvael",                    english: "Goodbye",               group: "Greetings" },
+  { sigan: "alvael aevil sova",          english: "How are you?",          group: "Greetings" },
+  { sigan: "elva aevil saeril",          english: "I am well",             group: "Greetings" },
+
+  // ── Identity ──────────────────────────────────────────────────────────
+  { sigan: "elva aevil Sejuty",          english: "I am Sejuty",           group: "Identity"  },
+
+  // ── Commands ──────────────────────────────────────────────────────────
+  { sigan: "silvonor",                   english: "Silence!",              group: "Commands"  },
+
+  // ── Motion ────────────────────────────────────────────────────────────
+  { sigan: "elva lorel ulra",            english: "I go there",            group: "Motion"    },
+  { sigan: "elva lorel ilra",            english: "I go here",             group: "Motion"    },
+  { sigan: "sova talovel ulra",          english: "You run there",         group: "Motion"    },
+  { sigan: "elvan aeravel ilra",         english: "We return here",        group: "Motion"    },
+
+  // ── Everyday ──────────────────────────────────────────────────────────
+  { sigan: "elva elavar sova",           english: "I love you",            group: "Everyday"  },
+  { sigan: "elva nael thaevel",          english: "I do not speak",        group: "Everyday"  },
+  { sigan: "elva savorel al savori",     english: "I eat the food",        group: "Everyday"  },
+  { sigan: "thira mirel al mirae",       english: "He walks the path",     group: "Everyday"  },
+  { sigan: "elva selavor al savori",     english: "I want the food",       group: "Everyday"  },
+  { sigan: "elva thaevel al voriva",     english: "I speak the word",      group: "Everyday"  },
+  { sigan: "elva lireval al voriva",     english: "I read the word",       group: "Everyday"  },
+  { sigan: "elvan alivor sovan",         english: "We help you",           group: "Everyday"  },
+  { sigan: "elva aethivar al valori",    english: "I think the truth",     group: "Everyday"  },
+
+  // ── Emotion ───────────────────────────────────────────────────────────
+  { sigan: "thira drelovar al narovi",   english: "He fears the enemy",    group: "Emotion"   },
+  { sigan: "elva elavar al alorivi",     english: "I love life",           group: "Emotion"   },
+  { sigan: "elva sorviran al morive",    english: "I mourn the dead",      group: "Emotion"   },
+
+  // ── Questions ─────────────────────────────────────────────────────────
+  { sigan: "sivael velor sova",          english: "Who sees you?",         group: "Questions" },
+  { sigan: "sivael lireval al voriva",   english: "Who reads the word?",   group: "Questions" },
+  { sigan: "sivael alivor sovan",        english: "Who helps you?",        group: "Questions" },
 ];
 
 // Hardcoded default — shows instantly without needing the API running
-const DEFAULT_IDX = 6; // "elva lorel ulra"
+const DEFAULT_IDX = 0; // "elva velor sova"
 const DEFAULT_TREE: TreeNode = {
   symbol: "S",
   children: [
@@ -39,15 +64,15 @@ const DEFAULT_TREE: TreeNode = {
       ],
     },
     {
-      symbol: "VP_LOC",
+      symbol: "VP",
       children: [
+        { symbol: "V", token: "velor", tense: "present", aspect: "simple", children: [] },
         {
-          symbol: "VP",
+          symbol: "NP",
           children: [
-            { symbol: "V", token: "lorel", tense: "present", aspect: "simple", children: [] },
+            { symbol: "Pron", token: "sova", tense: null, aspect: null, children: [] },
           ],
         },
-        { symbol: "Loc", token: "ulra", tense: null, aspect: null, children: [] },
       ],
     },
   ],
@@ -64,12 +89,12 @@ const SUFFIXES = [
 ];
 
 const PRONOUNS = [
-  { sigan: "elva",   en: "I / me"       },
-  { sigan: "sova",   en: "you (sg)"     },
-  { sigan: "thira",  en: "he / she / it"},
-  { sigan: "elvan",  en: "we / us"      },
-  { sigan: "sovan",  en: "you (pl)"     },
-  { sigan: "thiran", en: "they / them"  },
+  { sigan: "elva",   en: "I / me"        },
+  { sigan: "sova",   en: "you (sg)"      },
+  { sigan: "thira",  en: "he / she / it" },
+  { sigan: "elvan",  en: "we / us"       },
+  { sigan: "sovan",  en: "you (pl)"      },
+  { sigan: "thiran", en: "they / them"   },
 ];
 
 const GROUP_COLORS: Record<string, string> = {
@@ -78,8 +103,11 @@ const GROUP_COLORS: Record<string, string> = {
   Commands:  "text-red-400",
   Motion:    "text-emerald-400",
   Everyday:  "text-slate-400",
+  Emotion:   "text-rose-400",
   Questions: "text-pink-400",
 };
+
+const GROUPS = Array.from(new Set(EXAMPLES.map(e => e.group)));
 
 export default function HomePage() {
   const [selected, setSelected]       = useState(DEFAULT_IDX);
@@ -87,6 +115,7 @@ export default function HomePage() {
   const [translation, setTranslation] = useState(EXAMPLES[DEFAULT_IDX].english);
   const [loading, setLoading]         = useState(false);
   const [apiDown, setApiDown]         = useState(false);
+  const [groupFilter, setGroupFilter] = useState<string | null>(null);
 
   const pickExample = async (idx: number) => {
     setSelected(idx);
@@ -118,6 +147,22 @@ export default function HomePage() {
       setLoading(false);
     }
   };
+
+  const handleGroupFilter = (group: string | null) => {
+    setGroupFilter(group);
+    if (group && EXAMPLES[selected].group !== group) {
+      const firstIdx = EXAMPLES.findIndex(e => e.group === group);
+      if (firstIdx !== -1) {
+        setSelected(firstIdx);
+        setTree(null);
+        setTranslation(EXAMPLES[firstIdx].english);
+      }
+    }
+  };
+
+  const visibleExamples = groupFilter
+    ? EXAMPLES.map((e, i) => ({ ...e, i })).filter(e => e.group === groupFilter)
+    : EXAMPLES.map((e, i) => ({ ...e, i }));
 
   const ex = EXAMPLES[selected];
 
@@ -158,13 +203,42 @@ export default function HomePage() {
 
       {/* ── Example sentences + live parse tree ── */}
       <section className="flex flex-col gap-6">
-        <h2 className="text-xs uppercase tracking-widest text-slate-500">
-          Everyday Phrases — click to see the parse tree
-        </h2>
+        <div className="flex flex-col gap-3">
+          <h2 className="text-xs uppercase tracking-widest text-slate-500">
+            Example Phrases — click to see the parse tree
+          </h2>
+          {/* Group filter pills */}
+          <div className="flex flex-wrap gap-2">
+            <button
+              onClick={() => handleGroupFilter(null)}
+              className={`px-3 py-1 rounded-full text-xs font-medium transition-colors ${
+                !groupFilter
+                  ? "bg-violet-500/20 text-violet-300"
+                  : "bg-slate-800 text-slate-400 hover:text-slate-200"
+              }`}
+            >
+              All
+            </button>
+            {GROUPS.map(group => (
+              <button
+                key={group}
+                onClick={() => handleGroupFilter(groupFilter === group ? null : group)}
+                className={`flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium transition-colors ${
+                  groupFilter === group
+                    ? "bg-violet-500/20 text-violet-300"
+                    : "bg-slate-800 text-slate-400 hover:text-slate-200"
+                }`}
+              >
+                <span className={GROUP_COLORS[group] ?? "text-slate-400"}>●</span>
+                {group}
+              </button>
+            ))}
+          </div>
+        </div>
 
         {/* Cards grid */}
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
-          {EXAMPLES.map((e, i) => {
+          {visibleExamples.map(({ i, ...e }) => {
             const active = selected === i;
             const dot = GROUP_COLORS[e.group] ?? "text-slate-400";
             return (
@@ -173,11 +247,11 @@ export default function HomePage() {
                 onClick={() => pickExample(i)}
                 className={`text-left p-3 rounded-xl border transition-all ${
                   active
-                    ? "bg-violet-500/10 border-violet-500/40"
+                    ? "bg-amber-500/15 border-amber-500/50"
                     : "bg-slate-900 border-slate-800 hover:border-slate-600"
                 }`}
               >
-                <div className={`sigan text-sm font-medium truncate ${active ? "text-violet-300" : "text-slate-200"}`}>
+                <div className={`sigan text-sm font-medium truncate ${active ? "text-amber-200" : "text-slate-200"}`}>
                   {e.sigan}
                 </div>
                 <div className="flex items-center gap-1.5 mt-0.5">
@@ -193,7 +267,7 @@ export default function HomePage() {
         <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden">
           {/* Header */}
           <div className="flex items-center gap-3 px-5 py-4 border-b border-slate-800">
-            <span className="sigan text-violet-300">{ex.sigan}</span>
+            <span className="sigan text-amber-300">{ex.sigan}</span>
             <span className="text-slate-700">→</span>
             <span className="text-slate-300 text-sm">{translation}</span>
             <span className={`ml-auto text-xs uppercase tracking-wider ${GROUP_COLORS[ex.group] ?? "text-slate-500"}`}>
