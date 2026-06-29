@@ -73,7 +73,13 @@ def tokenize_and_tag(sentence: str) -> tuple[list[TokenInfo], list[str]]:
     for raw_word in sentence.split():
         word = raw_word.lower()
         if word in LEXICON:
-            tokens.append(TokenInfo(word, LEXICON[word]))
+            pos = LEXICON[word]
+            if pos == "V":
+                # Bare verb stem in lexicon — still needs tense/aspect (present simple)
+                stem, tense, aspect = strip_verb_suffix(word) or (word, "present", "simple")
+                tokens.append(TokenInfo(word, pos, stem=stem, tense=tense, aspect=aspect))
+            else:
+                tokens.append(TokenInfo(word, pos))
         else:
             result = strip_verb_suffix(word)
             if result:

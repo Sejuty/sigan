@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import ParseTree, { type TreeNode } from "@/components/ParseTree";
 
@@ -148,15 +148,13 @@ export default function HomePage() {
     }
   };
 
+  useEffect(() => { pickExample(DEFAULT_IDX); }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
   const handleGroupFilter = (group: string | null) => {
     setGroupFilter(group);
     if (group && EXAMPLES[selected].group !== group) {
       const firstIdx = EXAMPLES.findIndex(e => e.group === group);
-      if (firstIdx !== -1) {
-        setSelected(firstIdx);
-        setTree(null);
-        setTranslation(EXAMPLES[firstIdx].english);
-      }
+      if (firstIdx !== -1) pickExample(firstIdx);
     }
   };
 

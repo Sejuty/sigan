@@ -138,17 +138,18 @@ class TranslateRequest(BaseModel):
 def translate(req: TranslateRequest):
     if req.direction == "to_english":
         r = sigan_to_english(req.text)
+        err = r.get("error")
         return {
             "success": r["success"],
             "result":  r.get("english", ""),
-            "error":   r.get("error"),
+            "error":   err if err else None,  # normalise [] → null
         }
     else:
         r = english_to_sigan(req.text)
         return {
             "success": r["success"],
             "result":  r.get("sigan", ""),
-            "error":   r.get("error"),
+            "error":   r.get("error") or None,
         }
 
 

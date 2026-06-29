@@ -112,6 +112,23 @@ def _build_reverse_lookup() -> None:
             en = QN_EN.get(sig)
             if en:
                 _EN_TO_SIGAN[en] = (sig, "QN")
+        elif pos == "Loc":
+            en = LOC_EN.get(sig)
+            if en:
+                _EN_TO_SIGAN[en] = (sig, "Loc")
+
+    # Possessive pronouns
+    for sig, pos in LEXICON.items():
+        if pos == "PossN":
+            en = POSS_EN.get(sig)
+            if en:
+                _EN_TO_SIGAN[en] = (sig, "PossN")
+    _EN_TO_SIGAN.update({
+        "my":    ("elvanar",  "PossN"), "our":   ("elvanen",  "PossN"),
+        "your":  ("sovanar",  "PossN"),
+        "his":   ("thiranar", "PossN"), "her":   ("thiranar", "PossN"),
+        "its":   ("thiranar", "PossN"), "their": ("thiranen", "PossN"),
+    })
 
     # Explicit pronoun overrides — singular "you" wins over plural
     _EN_TO_SIGAN.update({
@@ -276,6 +293,22 @@ def _fix_agreement(text: str) -> str:
     words = text.split()
     if len(words) < 2:
         return text
+
+    _POSSESSIVE_SUBJECTS = {"my", "your", "his", "her", "its", "our", "their"}
+    # When the subject is a possessive NP ("my person", "her voice"), the
+    # grammatical subject is the noun, which is 3rd-person.  Skip the
+    # possessive word and treat the noun as 3rd-singular for agreement.
+    if words[0].lower() in _POSSESSIVE_SUBJECTS and len(words) > 2:
+        # Shift: treat words[1] as subject placeholder, apply 3ps to words[2]
+        noun_idx = 2
+        if (words[noun_idx] not in _AUX_WORDS
+                and words[noun_idx].isalpha()
+                and words[noun_idx] not in _KNOWN_PAST_FORMS):
+            words[noun_idx] = _add_3ps(words[noun_idx])
+        elif words[noun_idx] == "do":
+            words[noun_idx] = "does"
+        return " ".join(words)
+
     subj = words[0].lower()
 
     if subj in _PLURAL_SUBJECTS:
@@ -360,6 +393,9 @@ def _parse_english(words: list[str]) -> dict:
         return result
 
     # Subject
+    _AUX_SET = ("was", "were", "is", "am", "are", "has", "have",
+                "had", "will", "did", "do", "does", "usually", "not", "never")
+    _POSSESSIVES = {"my", "your", "his", "her", "its", "our", "their"}
     subj_parts: list[str] = []
     while i < n:
         w = words[i].lower()
@@ -367,9 +403,15 @@ def _parse_english(words: list[str]) -> dict:
             subj_parts.append(w); i += 1; break
         if w in ("the", "a", "an", "some"):
             subj_parts.append(w); i += 1
-        elif w not in ("was", "were", "is", "am", "are", "has", "have",
-                       "had", "will", "did", "do", "does", "usually",
-                       "not", "never") and _en_to_stem(w) is None:
+        elif w in _POSSESSIVES:
+            subj_parts.append(words[i]); i += 1
+            # Consume following noun: e.g. "my name", "her voice"
+            if (i < n
+                    and words[i].lower() not in _AUX_SET
+                    and _en_to_stem(words[i].lower()) is None):
+                subj_parts.append(words[i]); i += 1
+            break
+        elif w not in _AUX_SET and _en_to_stem(w) is None:
             subj_parts.append(w); i += 1; break
         else:
             break
@@ -396,7 +438,10 @@ def _parse_english(words: list[str]) -> dict:
     else:
         if not auxes and i < n:
             w = words[i].lower()
-            if w in _EN_PAST_TO_BASE or w in _EN_PAST_PART_TO_BASE:
+            base = _EN_PAST_TO_BASE.get(w) or _EN_PAST_PART_TO_BASE.get(w)
+            # Only infer past when the surface form is unambiguously past
+            # (e.g. "saw" ≠ "see"), not when it's identical to the base ("read" = "read")
+            if base and base != w:
                 result["tense"] = "past"
                 result["aspect"] = "simple"
 
@@ -411,6 +456,30 @@ def _parse_english(words: list[str]) -> dict:
         stem = _en_to_stem(raw[:-3]) or _en_to_stem(raw[:-4] if len(raw) > 4 else "")
     result["verb_stem"] = stem
     i += 1
+
+    # Copula fallback: "am/is/are/was/were" consumed as aux but next word is not a verb
+    # e.g. "I am Sejuty", "My name is Sartre", "He was a leader"
+    if stem is None:
+        _COPULA_AUXES = {"am", "is", "are", "was", "were", "be"}
+        for a in reversed(auxes):
+            if a in _COPULA_AUXES:
+                result["verb_stem"] = "aevil"
+                result["aspect"] = "simple"
+                if a in ("was", "were"):
+                    result["tense"] = "past"
+                else:
+                    result["tense"] = "present"
+                # words[i-1] is the predicate (e.g. "Sejuty") — collect it as the object
+                obj_words = [words[i - 1]]
+                while i < n:
+                    w = words[i].lower()
+                    sig, pos = _EN_TO_SIGAN.get(w, (None, None))
+                    if pos == "T":
+                        result["time_word"] = sig; i += 1; break
+                    obj_words.append(words[i]); i += 1
+                result["object_words"] = obj_words
+                result["complement"] = None
+                return result
 
     # Complement clause detection: pron + verb (e.g. "you die", "he speak")
     complement: Optional[str] = None
