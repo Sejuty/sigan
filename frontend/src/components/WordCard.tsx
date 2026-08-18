@@ -99,6 +99,30 @@ function ConjugationGrid({ conjugations }: { conjugations: Conjugation[] }) {
   );
 }
 
+function CopyField({ label, value, valueClass = "text-slate-200" }: { label: string; value: string; valueClass?: string }) {
+  const [copied, setCopied] = useState(false);
+
+  const handleDoubleClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    navigator.clipboard.writeText(value);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 1200);
+  };
+
+  return (
+    <div>
+      <span className="text-slate-500 text-xs">{label} </span>
+      <span
+        className={`cursor-pointer transition-colors ${copied ? "text-violet-400" : valueClass}`}
+        title="Double-click to copy"
+        onDoubleClick={handleDoubleClick}
+      >
+        {copied ? "✓ copied" : value}
+      </span>
+    </div>
+  );
+}
+
 export default function WordCard({ entry }: { entry: VocabEntry }) {
   const [open, setOpen]     = useState(false);
   const [copied, setCopied] = useState(false);
@@ -156,16 +180,8 @@ export default function WordCard({ entry }: { entry: VocabEntry }) {
             <div className="mt-3">
               <p className="text-xs text-slate-500 uppercase tracking-wider mb-1">Details</p>
               <div className="flex gap-6 text-sm">
-                <div>
-                  <span className="text-slate-500 text-xs">Sigan </span>
-                  <span className="sigan text-violet-300">{entry.sigan}</span>
-                </div>
-                {entry.english && (
-                  <div>
-                    <span className="text-slate-500 text-xs">English </span>
-                    <span className="text-slate-200">{entry.english}</span>
-                  </div>
-                )}
+                <CopyField label="Sigan" value={entry.sigan} valueClass="sigan text-violet-300" />
+                {entry.english && <CopyField label="English" value={entry.english} />}
               </div>
             </div>
           )}

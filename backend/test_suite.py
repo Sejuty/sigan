@@ -163,7 +163,7 @@ assert_valid("elva velorenzun sova",     "future habitual")
 section("1f. Validation — Locatives")
 assert_valid("elva lorel ulra",          "I go there")
 assert_valid("elva lorel ilra",          "I go here")
-assert_valid("silvonor",                 "Silence! (imperative)")
+assert_valid("silvonor",                 "Silence (imperative)")
 
 section("1g. Validation — Possessives")
 assert_valid("elva velor elvanar laeva",   "I see my person")

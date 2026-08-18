@@ -116,6 +116,10 @@ def _build_reverse_lookup() -> None:
             en = LOC_EN.get(sig)
             if en:
                 _EN_TO_SIGAN[en] = (sig, "Loc")
+        elif pos == "Greet":
+            en = GREET_EN.get(sig)
+            if en:
+                _EN_TO_SIGAN[en] = (sig, "Greet")
 
     # Possessive pronouns
     for sig, pos in LEXICON.items():
@@ -514,6 +518,12 @@ def english_to_sigan(sentence: str) -> dict:
     words = sentence.strip().split()
     if not words:
         return {"success": False, "sigan": "", "error": "Empty input"}
+
+    # Standalone greeting, e.g. "hello" -> "laevel"
+    if len(words) == 1:
+        sig, pos = _EN_TO_SIGAN.get(words[0].lower(), (None, None))
+        if pos == "Greet":
+            return {"success": True, "sigan": sig, "error": None}
 
     parsed = _parse_english(words)
     if parsed["error"]:
