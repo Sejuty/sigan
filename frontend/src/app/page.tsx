@@ -103,7 +103,7 @@ export default function HomePage() {
     }
   };
 
-  useEffect(() => { pickExample(DEFAULT_IDX); }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  // useEffect(() => { pickExample(DEFAULT_IDX); }, []);  
 
   const handleGroupFilter = (group: string | null) => {
     setGroupFilter(group);
@@ -132,26 +132,7 @@ export default function HomePage() {
           A constructed language with strict SVO word order, suffix-based tense
           morphology, and a deterministic CKY chart parser.
         </p>
-        <div className="flex flex-wrap justify-center gap-3 mt-1">
-          <Link
-            href="/translate"
-            className="px-6 py-2.5 bg-violet-600 hover:bg-violet-500 text-white text-sm font-medium rounded-lg transition-colors"
-          >
-            Translate
-          </Link>
-          <Link
-            href="/validate"
-            className="px-6 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-sm font-medium rounded-lg transition-colors"
-          >
-            Validate
-          </Link>
-          <Link
-            href="/vocab"
-            className="px-6 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-sm font-medium rounded-lg transition-colors"
-          >
-            Vocab
-          </Link>
-        </div>
+       
       </section>
 
       {/* ── Example sentences + live parse tree ── */}
