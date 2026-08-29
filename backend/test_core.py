@@ -1,6 +1,6 @@
 """
 Comprehensive test suite for Sigan validator and translator.
-Run: python3 test_suite.py
+Run: python3 test_core.py
 """
 
 import sys

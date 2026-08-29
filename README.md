@@ -12,7 +12,8 @@ sigan/
 │   ├── validator.py    CKY chart parser — checks grammatical validity
 │   ├── translator.py   Sigan ↔ English bidirectional translator
 │   ├── api.py          FastAPI server (REST bridge for the frontend)
-│   └── cli.py          Interactive REPL combining all tools
+│   ├── cli.py          Interactive REPL combining all tools
+│   └── test_*.py       Test suites — parser, grammar coverage, API
 └── frontend/
     └── src/app/
         ├── vocab/      Browse and search the lexicon
@@ -53,6 +54,21 @@ cd frontend && npm run dev                            # terminal 2
 ```
 
 Then open `http://localhost:3000`.
+
+## Tests
+
+415 tests, no framework required — each file runs standalone and exits
+non-zero on failure.
+
+```bash
+cd backend
+python3 test_core.py              # 148 — validator and translator core
+python3 test_grammar_coverage.py  # 159 — prepositions, aspects, question words
+python3 test_api.py               # 108 — every endpoint, via TestClient
+```
+
+`test_api.py` needs the dependencies from `requirements.txt` installed; the
+other two run on the standard library alone.
 
 ## API
 

@@ -1,10 +1,10 @@
 """
-Second comprehensive test suite — covers gaps from test_suite.py:
+Second comprehensive test suite — covers gaps from test_core.py:
   prepositions, time words, all question words, irregular pasts,
   object pronouns, plural subjects, habitual aspect, all possessives,
   E→S irregular verbs, round-trips for new patterns, more invalid sentences.
 
-Run: python3 test_suite_2.py
+Run: python3 test_grammar_coverage.py
 """
 
 import sys
