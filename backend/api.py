@@ -97,6 +97,15 @@ def _node_to_dict(node: ParseNode) -> dict:
 # Routes
 # ---------------------------------------------------------------------------
 
+@app.get("/")
+def root():
+    return {
+        "service":   "Sigan API",
+        "docs":      "/docs",
+        "endpoints": ["/vocab", "/translate", "/validate"],
+    }
+
+
 @app.get("/vocab")
 def get_vocab():
     categories: dict[str, list] = {}
