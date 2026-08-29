@@ -22,6 +22,13 @@ sigan/
 
 Backend uses Python stdlib only, plus FastAPI for the API server.
 
+## Setup
+
+```bash
+cd backend && pip install -r requirements.txt
+cd frontend && npm install
+```
+
 ## Running
 
 ```bash
@@ -46,6 +53,30 @@ cd frontend && npm run dev                            # terminal 2
 ```
 
 Then open `http://localhost:3000`.
+
+## API
+
+| Method | Endpoint | Body |
+|---|---|---|
+| `GET`  | `/` | — (service info) |
+| `GET`  | `/vocab` | — |
+| `POST` | `/translate` | `{"text": "...", "direction": "to_english" \| "to_sigan"}` |
+| `POST` | `/validate` | `{"sentence": "..."}` |
+
+Interactive docs at `http://localhost:8000/docs`.
+
+## Configuration
+
+The frontend reads the API base URL from `NEXT_PUBLIC_API_URL`, falling back to
+`http://localhost:8000` when unset. For local development the fallback is
+usually enough; to point at a deployed backend, create `frontend/.env.local`:
+
+```bash
+NEXT_PUBLIC_API_URL=https://your-backend-host   # no trailing slash
+```
+
+`NEXT_PUBLIC_*` values are inlined at build time, so the variable must be set
+*before* building — changing it requires a rebuild, not just a restart.
 
 ## Tense/aspect suffixes
 
